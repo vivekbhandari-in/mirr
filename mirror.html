@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mirror — Become who you said you'd be</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#13110F;
+  --ink2:#2A2520;
+  --ink3:#3D3530;
+  --gold:#C9A96E;
+  --gold2:#A8864E;
+  --paper:#F5F0E8;
+  --paper2:#EDE8DF;
+  --paper3:#E0D9CE;
+  --muted:#6B6259;
+  --faint:#9E958A;
+  --rule:rgba(201,169,110,0.18);
+  --rule2:rgba(201,169,110,0.32);
+  --white:#FDFCF9;
+  --serif:'DM Serif Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--sans);background:var(--ink);color:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.6}
+button,input,textarea,select{font-family:inherit}
+a{color:inherit;text-decoration:none}
+.page{display:none!important}
+.page.active{display:block!important}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  height:52px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;
+  background:rgba(19,17,15,0.94);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--rule);
+}
+.nav-logo{font-family:var(--serif);font-size:19px;color:var(--paper);cursor:pointer;letter-spacing:-.01em}
+.nav-logo em{font-style:italic;color:var(--gold)}
+.nav-r{display:flex;align-items:center;gap:20px}
+.nav-link{font-size:12px;font-weight:300;color:var(--faint);letter-spacing:.04em;cursor:pointer;transition:color .2s;background:none;border:none;padding:4px 0}
+.nav-link:hover{color:var(--paper)}
+.nav-cta{font-size:12px;font-weight:500;color:var(--ink);background:var(--gold);padding:7px 16px;border-radius:3px;border:none;cursor:pointer;letter-spacing:.03em;transition:background .2s}
+.nav-cta:hover{background:var(--gold2)}
+
+/* ── LANDING ── */
+#landing{padding-top:52px}
+.hero{
+  min-height:calc(100vh - 52px);
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--rule);
+}
+.hero-l{
+  padding:72px 48px 72px 32px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-right:1px solid var(--rule);
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:400;letter-spacing:.08em;
+  color:var(--gold);margin-bottom:28px;
+}
+.hero-eyebrow::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.hero h1{
+  font-family:var(--serif);font-size:clamp(48px,5.2vw,76px);
+  font-weight:400;line-height:1.05;letter-spacing:-.02em;
+  color:var(--paper);margin-bottom:20px;
+}
+.hero h1 span{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:16px;font-weight:300;color:var(--muted);line-height:1.8;max-width:420px;margin-bottom:40px}
+.hero-btns{display:flex;gap:12px;align-items:center;margin-bottom:40px}
+.btn-gold{font-size:14px;font-weight:500;color:var(--ink);background:var(--gold);padding:13px 28px;border-radius:3px;border:none;cursor:pointer;letter-spacing:.02em;transition:background .2s,transform .15s;display:inline-block}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn-ghost{font-size:13px;font-weight:300;color:var(--muted);background:transparent;border:1px solid var(--rule2);padding:12px 22px;border-radius:3px;cursor:pointer;transition:border-color .2s,color .2s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--paper)}
+.hero-proof{display:flex;align-items:center;gap:12px}
+.hero-avs{display:flex}
+.hero-av{width:24px;height:24px;border-radius:50%;background:var(--ink3);border:1.5px solid var(--ink);font-size:9px;font-weight:500;color:var(--faint);display:flex;align-items:center;justify-content:center;margin-right:-7px}
+.hero-proof-txt{font-size:12px;font-weight:300;color:var(--faint);margin-left:16px}
+.hero-proof-txt strong{font-weight:500;color:var(--paper)}
+
+/* hero right — live notebook */
+.hero-r{
+  background:var(--ink2);
+  display:flex;align-items:center;justify-content:center;padding:40px 32px;
+}
+.nb{width:100%;max-width:400px;background:var(--ink3);border:1px solid var(--rule2);border-radius:4px;overflow:hidden}
+.nb-bar{background:var(--ink2);padding:10px 14px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:6px}
+.nb-dot{width:9px;height:9px;border-radius:50%}
+.nb-label{font-size:11px;color:var(--faint);margin-left:8px;letter-spacing:.04em}
+.nb-body{padding:24px 22px}
+.nb-step{font-size:10px;letter-spacing:.1em;color:var(--gold);margin-bottom:10px;font-weight:400}
+.nb-q{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--paper);line-height:1.35;margin-bottom:16px}
+.nb-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.nb-chip{font-size:11px;font-weight:300;color:var(--faint);border:1px solid var(--rule2);padding:4px 10px;border-radius:2px;letter-spacing:.02em}
+.nb-chip.on{border-color:var(--gold);color:var(--gold);background:rgba(201,169,110,.08)}
+.nb-line{background:var(--ink2);border:none;border-bottom:1px solid var(--rule);padding:10px 0;font-family:var(--serif);font-style:italic;font-size:13px;color:rgba(245,240,232,.3);width:100%;outline:none;margin-bottom:14px;letter-spacing:.01em}
+.nb-prog{height:1px;background:var(--rule);margin-top:6px}
+.nb-prog-fill{height:100%;width:25%;background:var(--gold)}
+.nb-prog-l{font-size:10px;color:var(--faint);margin-top:5px;text-align:right;letter-spacing:.04em}
+
+/* stats strip */
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--rule)}
+.stat-item{padding:36px 32px;border-right:1px solid var(--rule);text-align:center}
+.stat-item:last-child{border-right:none}
+.stat-n{font-family:var(--serif);font-size:44px;font-style:italic;color:var(--paper);line-height:1;margin-bottom:6px}
+.stat-l{font-size:12px;font-weight:300;color:var(--muted);letter-spacing:.03em}
+
+/* features */
+.features{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--rule)}
+.feat{padding:32px 24px 32px 28px;border-right:1px solid var(--rule)}
+.feat:last-child{border-right:none}
+.feat-idx{font-family:var(--serif);font-size:32px;font-style:italic;color:var(--ink3);line-height:1;margin-bottom:14px;display:block}
+.feat h3{font-size:13px;font-weight:500;color:var(--paper);margin-bottom:7px;letter-spacing:-.01em}
+.feat p{font-size:12px;font-weight:300;color:var(--muted);line-height:1.7}
+
+/* testimonials */
+.testi-section{padding:72px 32px;border-bottom:1px solid var(--rule);max-width:1200px;margin:0 auto}
+.sec-hd{margin-bottom:48px}
+.sec-hd h2{font-family:var(--serif);font-size:clamp(32px,3.5vw,48px);color:var(--paper);line-height:1.1;letter-spacing:-.02em;margin-bottom:10px}
+.sec-hd h2 em{font-style:italic;color:var(--gold)}
+.sec-hd p{font-size:14px;font-weight:300;color:var(--muted);line-height:1.75;max-width:400px}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule)}
+.testi-card{background:var(--ink);padding:28px 24px}
+.testi-q{font-family:var(--serif);font-style:italic;font-size:14px;color:rgba(245,240,232,.75);line-height:1.75;margin-bottom:20px}
+.testi-auth{font-size:11px;font-weight:400;color:var(--muted)}
+.testi-auth strong{color:var(--paper);font-weight:500;display:block;margin-bottom:2px}
+
+/* cta */
+.cta-sec{padding:80px 32px;text-align:center;border-bottom:1px solid var(--rule)}
+.cta-sec h2{font-family:var(--serif);font-size:clamp(40px,5vw,64px);font-style:italic;color:var(--paper);line-height:1.05;letter-spacing:-.02em;margin-bottom:14px}
+.cta-sec h2 em{color:var(--gold);font-style:normal}
+.cta-sec p{font-size:15px;font-weight:300;color:var(--muted);line-height:1.8;max-width:380px;margin:0 auto 32px}
+
+/* footer */
+.footer{padding:28px 32px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--rule)}
+.footer-l{font-family:var(--serif);font-style:italic;font-size:16px;color:rgba(245,240,232,.25)}
+.footer-c{font-size:11px;font-weight:300;color:rgba(245,240,232,.18);letter-spacing:.03em}
+.footer-r{display:flex;gap:20px}
+.footer-r a{font-size:11px;font-weight:300;color:rgba(245,240,232,.22);transition:color .2s}
+.footer-r a:hover{color:var(--faint)}
+
+/* ── SURVEY ── */
+#survey-page{
+  padding-top:52px;min-height:100vh;
+  background:var(--white);
+  display:flex;align-items:center;justify-content:center;padding-bottom:60px;
+}
+.survey-shell{width:100%;max-width:600px;padding:0 24px}
+.s-header{text-align:center;margin-bottom:44px;padding-top:48px}
+.s-logo{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--ink);display:block;margin-bottom:28px}
+.s-logo em{color:var(--gold2)}
+.s-prog-outer{background:var(--paper3);height:2px;border-radius:0}
+.s-prog-inner{height:100%;background:var(--gold2);transition:width .5s ease}
+.s-prog-labels{display:flex;justify-content:space-between;margin-top:8px}
+.s-prog-label{font-size:10px;font-weight:300;color:var(--faint);letter-spacing:.04em;transition:color .3s}
+.s-prog-label.active{color:var(--gold2);font-weight:500}
+.s-card{
+  margin-top:32px;background:var(--white);
+  border:1px solid var(--paper3);border-radius:4px;padding:44px 40px;
+  box-shadow:0 1px 24px rgba(0,0,0,.04);
+}
+.s-area{font-size:10px;font-weight:500;letter-spacing:.1em;color:var(--gold2);text-transform:uppercase;margin-bottom:9px}
+.s-q{font-family:var(--serif);font-size:26px;color:var(--ink);line-height:1.2;margin-bottom:8px;letter-spacing:-.01em}
+.s-hint{font-size:13px;font-weight:300;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:24px}
+.s-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.s-chip{
+  font-size:12px;font-weight:400;color:var(--muted);
+  border:1px solid var(--paper3);padding:7px 14px;border-radius:2px;
+  cursor:pointer;background:transparent;transition:all .2s;letter-spacing:.02em;
+}
+.s-chip:hover,.s-chip.on{border-color:var(--gold2);color:var(--ink);background:rgba(168,134,78,.07)}
+.s-ta{
+  width:100%;background:var(--white);border:none;border-bottom:1.5px solid var(--paper3);
+  border-radius:0;padding:12px 0;font-family:var(--serif);font-size:15px;font-style:italic;
+  color:var(--ink);outline:none;resize:none;height:100px;line-height:1.7;transition:border-color .2s;
+}
+.s-ta:focus{border-bottom-color:var(--gold2)}
+.s-ta::placeholder{color:rgba(107,98,89,.35)}
+.s-footer{display:flex;justify-content:space-between;align-items:center;margin-top:28px}
+.s-back{font-size:12px;font-weight:300;color:var(--faint);background:none;border:none;cursor:pointer;letter-spacing:.04em;transition:color .2s}
+.s-back:hover{color:var(--muted)}
+.s-next{font-size:13px;font-weight:500;color:var(--white);background:var(--ink);padding:11px 24px;border-radius:3px;border:none;cursor:pointer;letter-spacing:.02em;transition:background .2s}
+.s-next:hover{background:var(--ink2)}
+.s-disclaimer{font-size:11px;font-weight:300;color:var(--faint);text-align:center;margin-top:20px;line-height:1.65}
+
+/* ── DASHBOARD ── */
+#dash-page{padding-top:52px;min-height:100vh;background:var(--paper)}
+.dash-topbar{
+  background:var(--white);border-bottom:1px solid var(--paper3);
+  padding:14px 28px;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.dash-user{display:flex;align-items:center;gap:12px}
+.dash-av{width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--ink);flex-shrink:0}
+.dash-name{font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
+.dash-since{font-size:11px;font-weight:300;color:var(--muted)}
+.dash-meta{display:flex;gap:20px;align-items:center}
+.dash-meta-it{font-size:11px;font-weight:300;color:var(--muted);letter-spacing:.02em}
+.dash-meta-it strong{font-weight:500;color:var(--ink)}
+.dash-acts{display:flex;gap:8px}
+.d-btn{font-size:11px;font-weight:400;padding:7px 14px;border-radius:3px;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+.d-btn-line{color:var(--muted);background:transparent;border:1px solid var(--paper3)}
+.d-btn-line:hover{border-color:var(--gold);color:var(--ink)}
+.d-btn-fill{color:var(--white);background:var(--ink);border:none}
+.d-btn-fill:hover{background:var(--ink2)}
+
+.dash-body{display:grid;grid-template-columns:1fr 320px;min-height:calc(100vh - 52px - 61px)}
+.dash-main{padding:28px 28px;border-right:1px solid var(--paper3)}
+.dash-side{padding:24px 20px;background:var(--white)}
+
+/* section headers inside dash */
+.d-sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.d-sec-title{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.d-sec-tag{font-size:10px;font-weight:400;color:var(--gold2);background:rgba(168,134,78,.1);padding:3px 9px;border-radius:2px;letter-spacing:.04em}
+
+/* today card */
+.today-card{
+  background:var(--ink);border-radius:4px;padding:24px 24px;margin-bottom:20px;
+  display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;
+}
+.today-date{font-size:10px;font-weight:300;color:var(--faint);letter-spacing:.06em;margin-bottom:8px}
+.today-head{font-family:var(--serif);font-size:22px;font-style:italic;color:var(--paper);line-height:1.25;margin-bottom:6px}
+.today-sub{font-size:12px;font-weight:300;color:var(--muted);line-height:1.65}
+.today-score-wrap{text-align:right}
+.today-score{font-family:var(--serif);font-size:40px;font-style:italic;color:var(--gold);line-height:1}
+.today-score-l{font-size:10px;font-weight:300;color:var(--faint);margin-top:3px;letter-spacing:.04em;text-align:right}
+.today-bar{height:2px;background:rgba(255,255,255,.1);margin-top:16px;border-radius:0}
+.today-bar-fill{height:100%;background:var(--gold);transition:width .6s ease}
+
+/* habits */
+.habits-wrap{margin-bottom:20px}
+.habit-row{
+  background:var(--white);border:1px solid var(--paper3);border-radius:3px;
+  padding:16px 18px;margin-bottom:8px;display:flex;align-items:flex-start;gap:14px;
+  transition:border-color .2s;cursor:pointer;
+}
+.habit-row:hover{border-color:var(--gold)}
+.habit-row.done{background:var(--paper2);opacity:.7}
+.habit-check{
+  width:18px;height:18px;border-radius:2px;border:1.5px solid var(--paper3);
+  flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;background:transparent;
+}
+.habit-row.done .habit-check{background:var(--gold);border-color:var(--gold)}
+.habit-check-icon{font-size:10px;color:var(--ink);display:none}
+.habit-row.done .habit-check-icon{display:block}
+.habit-info{flex:1}
+.habit-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:3px;letter-spacing:-.01em}
+.habit-row.done .habit-name{text-decoration:line-through;color:var(--muted)}
+.habit-desc{font-size:12px;font-weight:300;color:var(--muted);line-height:1.6}
+.habit-meta{display:flex;gap:8px;margin-top:7px;flex-wrap:wrap}
+.habit-tag{font-size:10px;font-weight:400;color:var(--gold2);background:rgba(168,134,78,.08);padding:2px 8px;border-radius:2px;letter-spacing:.03em}
+.habit-time{font-size:10px;font-weight:300;color:var(--faint);letter-spacing:.03em}
+.habit-edit-btn{font-size:11px;font-weight:300;color:var(--faint);background:none;border:none;cursor:pointer;padding:2px 0;transition:color .2s}
+.habit-edit-btn:hover{color:var(--gold2)}
+.missed-modal{
+  display:none;background:var(--white);border:1px solid var(--paper3);
+  border-radius:4px;padding:18px;margin-top:6px;margin-left:32px;
+}
+.missed-modal.open{display:block}
+.missed-q{font-size:12px;font-weight:300;color:var(--muted);margin-bottom:10px;line-height:1.6}
+.missed-opts{display:flex;flex-wrap:wrap;gap:6px}
+.missed-opt{font-size:11px;font-weight:300;color:var(--muted);border:1px solid var(--paper3);padding:5px 11px;border-radius:2px;cursor:pointer;background:transparent;transition:all .2s}
+.missed-opt:hover{border-color:var(--gold2);color:var(--ink)}
+
+/* mirror panel */
+.mirror-wrap{margin-bottom:20px}
+.mirror-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--paper3);border:1px solid var(--paper3);border-radius:4px;overflow:hidden}
+.mc{background:var(--white);padding:20px 18px;position:relative}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:.4}
+.mc-l{font-size:9px;font-weight:500;letter-spacing:.1em;color:var(--gold2);text-transform:uppercase;margin-bottom:8px}
+.mc-h{font-family:var(--serif);font-size:14px;color:var(--ink);line-height:1.3;margin-bottom:8px}
+.mc-p{font-family:var(--serif);font-size:12px;font-style:italic;color:var(--muted);line-height:1.7}
+.mc-tag{display:inline-block;margin-top:10px;font-size:10px;font-weight:300;color:var(--faint);border:1px solid var(--paper3);padding:2px 8px;border-radius:2px}
+
+/* action card */
+.action-card{
+  background:var(--ink2);border-radius:4px;padding:24px 22px;margin-bottom:20px;
+  border-left:2px solid var(--gold);
+}
+.ac-label{font-size:10px;font-weight:500;letter-spacing:.1em;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ac-pulse{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ac-head{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--paper);line-height:1.3;margin-bottom:10px}
+.ac-body{font-size:13px;font-weight:300;color:rgba(245,240,232,.6);line-height:1.8;margin-bottom:16px}
+.ac-steps{list-style:none;counter-reset:ac}
+.ac-step{
+  counter-increment:ac;display:flex;gap:10px;align-items:flex-start;
+  padding:9px 0;border-top:1px solid rgba(255,255,255,.06);
+  font-size:12px;font-weight:300;color:rgba(245,240,232,.55);line-height:1.65;
+}
+.ac-step::before{content:counter(ac);font-family:var(--serif);font-style:italic;font-size:18px;color:rgba(255,255,255,.1);min-width:18px;line-height:1;flex-shrink:0}
+
+/* nudge questions */
+.nudge-wrap{margin-bottom:20px}
+.nudge-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--paper3);align-items:flex-start}
+.nudge-item:last-child{border-bottom:none}
+.nudge-n{font-family:var(--serif);font-size:24px;font-style:italic;color:var(--paper3);min-width:20px;line-height:1;flex-shrink:0;margin-top:2px}
+.nudge-t{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--muted);line-height:1.7}
+
+/* reflection */
+.reflect-card{background:var(--white);border:1px solid var(--paper3);border-radius:4px;padding:22px;margin-bottom:20px}
+.rc-title{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:14px;letter-spacing:-.01em}
+.rc-field{margin-bottom:14px}
+.rc-label{font-size:11px;font-weight:300;color:var(--muted);display:block;margin-bottom:5px;letter-spacing:.03em}
+.rc-ta{
+  width:100%;background:var(--paper);border:1px solid var(--paper3);
+  border-radius:2px;padding:10px 12px;font-family:var(--serif);font-size:13px;
+  font-style:italic;color:var(--ink);outline:none;resize:none;height:64px;
+  line-height:1.65;transition:border-color .2s;
+}
+.rc-ta:focus{border-color:var(--gold)}
+.rc-ta::placeholder{color:rgba(107,98,89,.35)}
+.rc-save{font-size:12px;font-weight:500;color:var(--white);background:var(--ink);padding:9px 18px;border-radius:3px;border:none;cursor:pointer;transition:background .2s}
+.rc-save:hover{background:var(--ink2)}
+
+/* dash sidebar */
+.ds-sect{margin-bottom:24px}
+.ds-title{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--paper3)}
+.clarity-ring{text-align:center;padding:12px 0}
+.cr-num{font-family:var(--serif);font-size:52px;font-style:italic;color:var(--ink);line-height:1}
+.cr-label{font-size:11px;font-weight:300;color:var(--muted);margin-top:3px;letter-spacing:.04em}
+.cr-bar{margin-top:14px;height:3px;background:var(--paper3);border-radius:0}
+.cr-fill{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));transition:width .8s ease}
+.insight-chip{background:var(--paper);border:1px solid var(--paper3);border-radius:3px;padding:12px 14px;margin-bottom:8px}
+.ic-label{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:4px}
+.ic-val{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:2px;letter-spacing:-.01em}
+.ic-sub{font-size:11px;font-weight:300;color:var(--muted);line-height:1.5}
+
+/* weekly */
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
+.week-day{text-align:center}
+.week-day-l{font-size:9px;font-weight:400;color:var(--faint);letter-spacing:.04em;display:block;margin-bottom:4px}
+.week-dot{width:100%;aspect-ratio:1;border-radius:2px;background:var(--paper3);border:none;cursor:pointer;transition:background .2s}
+.week-dot.done{background:var(--gold)}
+.week-dot.partial{background:rgba(201,169,110,.4)}
+
+/* export strip */
+.export-strip{padding:14px 0;border-top:1px solid var(--paper3);display:flex;flex-direction:column;gap:7px}
+.exp-btn{font-size:11px;font-weight:400;color:var(--muted);background:var(--paper);border:1px solid var(--paper3);padding:8px 14px;border-radius:3px;cursor:pointer;text-align:left;transition:all .2s}
+.exp-btn:hover{border-color:var(--gold);color:var(--ink)}
+.exp-btn.danger{color:#B5402A}
+.exp-btn.danger:hover{border-color:#B5402A;background:rgba(181,64,42,.05)}
+
+/* toast */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:999;
+  background:var(--ink);color:var(--paper);font-size:13px;font-weight:300;
+  padding:12px 20px;border-radius:4px;border-left:2px solid var(--gold);
+  opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;letter-spacing:.02em;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* edit modal */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;display:none;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.edit-modal{background:var(--white);border-radius:6px;padding:32px;width:100%;max-width:480px;margin:24px}
+.edit-modal-title{font-family:var(--serif);font-size:22px;color:var(--ink);margin-bottom:20px;letter-spacing:-.01em}
+.em-field{margin-bottom:16px}
+.em-label{font-size:11px;font-weight:500;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:.04em;text-transform:uppercase}
+.em-input{width:100%;background:var(--paper);border:1px solid var(--paper3);border-radius:3px;padding:10px 12px;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink);outline:none;transition:border-color .2s}
+.em-input:focus{border-color:var(--gold)}
+.em-ta{height:72px;resize:none;line-height:1.65}
+.em-row{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+
+/* focus timer */
+.timer-card{background:var(--paper);border:1px solid var(--paper3);border-radius:4px;padding:18px;margin-bottom:12px}
+.timer-head{font-size:11px;font-weight:500;color:var(--muted);margin-bottom:12px;letter-spacing:.05em;text-transform:uppercase}
+.timer-display{font-family:var(--serif);font-size:36px;font-style:italic;color:var(--ink);text-align:center;line-height:1;margin-bottom:12px}
+.timer-btns{display:flex;gap:8px;justify-content:center}
+.t-btn{font-size:11px;font-weight:400;color:var(--muted);background:var(--white);border:1px solid var(--paper3);padding:6px 14px;border-radius:3px;cursor:pointer;transition:all .2s}
+.t-btn:hover{border-color:var(--gold);color:var(--ink)}
+.t-btn.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .nav{padding:0 18px}
+  .hero{grid-template-columns:1fr}
+  .hero-r{display:none}
+  .hero-l{padding:56px 20px}
+  .features{grid-template-columns:1fr 1fr}
+  .feat:nth-child(2){border-right:none}
+  .feat:nth-child(3){border-top:1px solid var(--rule)}
+  .feat:nth-child(4){border-top:1px solid var(--rule);border-right:none}
+  .testi-section{padding:56px 20px}
+  .testi-grid{grid-template-columns:1fr}
+  .stats-strip{grid-template-columns:1fr}
+  .stat-item{border-right:none;border-bottom:1px solid var(--rule)}
+  .cta-sec{padding:56px 20px}
+  .dash-body{grid-template-columns:1fr}
+  .dash-side{border-top:1px solid var(--paper3)}
+  .mirror-3{grid-template-columns:1fr}
+  .dash-main,.dash-side{padding:20px 18px}
+  .s-card{padding:28px 22px}
+  .dash-topbar{padding:12px 18px}
+}
+@media(max-width:600px){
+  .hero h1{font-size:40px}
+  .features{grid-template-columns:1fr}
+  .feat{border-right:none!important;border-bottom:1px solid var(--rule)}
+  .feat:last-child{border-bottom:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo" onclick="goPage('landing')">Mirror<em>.</em></span>
+  <div class="nav-r">
+    <button class="nav-link" onclick="goPage('landing')">Home</button>
+    <button class="nav-link" onclick="goPage('survey-page')">Survey</button>
+    <button class="nav-link" onclick="goPage('dash-page')">Dashboard</button>
+    <button class="nav-cta" onclick="goPage('survey-page')">Start now</button>
+  </div>
+</nav>
+
+<!-- ══ LANDING ══ -->
+<div id="landing" class="page active">
+  <section class="hero">
+    <div class="hero-l">
+      <div class="hero-eyebrow">personal transformation — private &amp; free</div>
+      <h1>Become who<br>you said <span>you'd be.</span></h1>
+      <p class="hero-sub">Understand what's holding you back. Build better habits. Make progress, one day at a time — without shame, guilt, or artificial pressure.</p>
+      <div class="hero-btns">
+        <button class="btn-gold" onclick="goPage('survey-page')">Start changing</button>
+        <button class="btn-ghost" onclick="goPage('dash-page')">Preview dashboard</button>
+      </div>
+      <div class="hero-proof">
+        <div class="hero-avs">
+          <div class="hero-av">R</div><div class="hero-av">A</div><div class="hero-av">S</div><div class="hero-av">M</div>
+        </div>
+        <p class="hero-proof-txt" style="margin-left:20px"><strong>3,200+ people</strong> building better habits this month</p>
+      </div>
+    </div>
+    <div class="hero-r">
+      <div class="nb">
+        <div class="nb-bar">
+          <div class="nb-dot" style="background:#E87C7C"></div>
+          <div class="nb-dot" style="background:#E8C47C"></div>
+          <div class="nb-dot" style="background:#7CE87C"></div>
+          <span class="nb-label">mirror.app/survey</span>
+        </div>
+        <div class="nb-body">
+          <p class="nb-step">Step 2 of 6 — Your goal</p>
+          <p class="nb-q">"What do you want your life to look like in 1–2 years?"</p>
+          <div class="nb-chips">
+            <span class="nb-chip on">Career</span><span class="nb-chip">Discipline</span><span class="nb-chip">Confidence</span><span class="nb-chip">Routine</span>
+          </div>
+          <div class="nb-line">"I want to be building my own product, not just executing…"</div>
+          <div class="nb-prog"><div class="nb-prog-fill"></div></div>
+          <p class="nb-prog-l">2 of 6 answered</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-strip">
+    <div class="stat-item"><div class="stat-n">3.2k</div><p class="stat-l">clarity sessions this month</p></div>
+    <div class="stat-item"><div class="stat-n">&lt;12m</div><p class="stat-l">average onboarding time</p></div>
+    <div class="stat-item"><div class="stat-n">91%</div><p class="stat-l">surfaced something they hadn't named</p></div>
+  </div>
+
+  <div class="features">
+    <div class="feat"><span class="feat-idx">1</span><h3>Self-discovery survey</h3><p>Six focused questions that help you articulate your situation, goal, and the thing standing in the way.</p></div>
+    <div class="feat"><span class="feat-idx">2</span><h3>Your personal mirror</h3><p>Your answers reflected back clearly — your stated problem, desired future, identified obstacles, and one starting priority.</p></div>
+    <div class="feat"><span class="feat-idx">3</span><h3>Personalized habits</h3><p>1–3 small, realistic habits built around your goal. Grounded in behavior design. Editable and skippable without shame.</p></div>
+    <div class="feat"><span class="feat-idx">4</span><h3>Growth dashboard</h3><p>Daily priorities, habit tracking, a focus timer, weekly reflection, and progress history — all local, all private.</p></div>
+  </div>
+
+  <section class="testi-section">
+    <div class="sec-hd">
+      <h2>What clarity <em>actually</em><br>feels like</h2>
+      <p>From real people who used Mirror to understand themselves and take their next step.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card"><p class="testi-q">"I've been circling the same problem for a year. Writing it down and seeing it reflected back — organized — felt like the fog finally lifted."</p><p class="testi-auth"><strong>Riya M.</strong> Product designer, 24</p></div>
+      <div class="testi-card"><p class="testi-q">"The habits it suggested were embarrassingly small. Which is exactly why I've actually done them for three weeks."</p><p class="testi-auth"><strong>Arjun K.</strong> Engineering student, 21</p></div>
+      <div class="testi-card"><p class="testi-q">"I thought I lacked motivation. The mirror showed me I hadn't actually decided what I wanted. That was the real problem."</p><p class="testi-auth"><strong>Sahil T.</strong> Aspiring founder, 26</p></div>
+    </div>
+  </section>
+
+  <section class="cta-sec">
+    <h2>Ten minutes.<br>One <em>clear</em> picture.</h2>
+    <p>No account. No subscription. No judgment. Your data stays in your browser.</p>
+    <button class="btn-gold" style="font-size:15px;padding:14px 32px" onclick="goPage('survey-page')">Start changing</button>
+  </section>
+
+  <footer class="footer">
+    <span class="footer-l">Mirror.</span>
+    <span class="footer-c">© 2026 · Your data lives only in your browser</span>
+    <div class="footer-r"><a href="#">Privacy</a><a href="#">About</a><a href="#">Contact</a></div>
+  </footer>
+</div>
+
+<!-- ══ SURVEY ══ -->
+<div id="survey-page" class="page">
+  <section id="survey-section" style="padding-top:52px;min-height:100vh;background:var(--white);display:flex;align-items:center;justify-content:center;padding-bottom:60px">
+    <div class="survey-shell">
+      <div class="s-header">
+        <span class="s-logo">Mirror<em>.</em></span>
+        <div class="s-prog-outer"><div class="s-prog-inner" id="sProgBar" style="width:0%"></div></div>
+        <div class="s-prog-labels" id="sProgLabels"></div>
+      </div>
+      <div class="s-card" id="sSurveyCard">
+        <p class="s-area" id="sArea">Area</p>
+        <h2 class="s-q" id="sQ">Loading…</h2>
+        <p class="s-hint" id="sHint"></p>
+        <div class="s-chips" id="sChips"></div>
+        <textarea class="s-ta" id="sTa" placeholder="Write here…"></textarea>
+        <div class="s-footer">
+          <button class="s-back" id="sBk" onclick="sBack()">← back</button>
+          <button class="s-next" id="sNxt" onclick="sNext()">Continue</button>
+        </div>
+      </div>
+      <p class="s-disclaimer">Your answers are saved only in this browser. Mirror never sends them anywhere.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="dash-page" class="page">
+<div id="dashboard">
+  <div class="dash-topbar">
+    <div class="dash-user">
+      <div class="dash-av" id="dAvatar">A</div>
+      <div>
+        <p class="dash-name" id="dName">Your growth dashboard</p>
+        <p class="dash-since" id="dSince">Started today — Career &amp; discipline</p>
+      </div>
+    </div>
+    <div class="dash-meta">
+      <span class="dash-meta-it">Streak <strong id="dStreak">1 day</strong></span>
+      <span class="dash-meta-it">Today <strong id="dToday">0/3</strong></span>
+      <span class="dash-meta-it">Clarity <strong id="dClarity">0%</strong></span>
+    </div>
+    <div class="dash-acts">
+      <button class="d-btn d-btn-line" onclick="goPage('survey-page')">Edit plan</button>
+      <button class="d-btn d-btn-fill" onclick="saveReflection()">Save reflection</button>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <!-- MAIN -->
+    <div class="dash-main">
+
+      <!-- today -->
+      <div class="today-card" id="todayCard">
+        <div>
+          <p class="today-date" id="todayDate">Monday, 3 Nov 2026</p>
+          <p class="today-head" id="todayHead">Good morning. Here's your focus for today.</p>
+          <p class="today-sub" id="todaySub">You're working on your career and discipline. Three habits are waiting.</p>
+          <div class="today-bar"><div class="today-bar-fill" id="todayBarFill" style="width:0%"></div></div>
+        </div>
+        <div class="today-score-wrap">
+          <p class="today-score" id="todayScoreNum">0%</p>
+          <p class="today-score-l">done today</p>
+        </div>
+      </div>
+
+      <!-- habits -->
+      <div class="d-sec-head">
+        <span class="d-sec-title">Today's habits</span>
+        <span class="d-sec-tag" id="habitsTag">0 of 3 done</span>
+      </div>
+      <div class="habits-wrap" id="habitsWrap"></div>
+
+      <!-- mirror -->
+      <div class="d-sec-head" style="margin-top:24px">
+        <span class="d-sec-title">Your mirror</span>
+        <span class="d-sec-tag">From your survey</span>
+      </div>
+      <div class="mirror-wrap">
+        <div class="mirror-3" id="mirrorCards"></div>
+      </div>
+
+      <!-- action card -->
+      <div class="d-sec-head" style="margin-top:4px">
+        <span class="d-sec-title">Your one priority</span>
+        <span class="d-sec-tag">AI-suggested</span>
+      </div>
+      <div class="action-card" id="actionCard">
+        <div class="ac-label"><span class="ac-pulse"></span>Starting point</div>
+        <p class="ac-head" id="acHead">"Don't quit — test quietly."</p>
+        <p class="ac-body" id="acBody">Loading your personalized insight…</p>
+        <ul class="ac-steps" id="acSteps"></ul>
+      </div>
+
+      <!-- nudge -->
+      <div class="d-sec-head" style="margin-top:4px">
+        <span class="d-sec-title">Questions to sit with</span>
+      </div>
+      <div class="nudge-wrap" id="nudgeWrap"></div>
+
+      <!-- reflection -->
+      <div class="d-sec-head" style="margin-top:4px">
+        <span class="d-sec-title">Daily reflection</span>
+        <span class="d-sec-tag" id="reflDate">Today</span>
+      </div>
+      <div class="reflect-card">
+        <p class="rc-title">End of day — how did it go?</p>
+        <div class="rc-field"><label class="rc-label">What went well today?</label><textarea class="rc-ta" id="rcWell" placeholder="Even small things count…"></textarea></div>
+        <div class="rc-field"><label class="rc-label">What got in the way?</label><textarea class="rc-ta" id="rcBlock" placeholder="Be honest — this is only for you…"></textarea></div>
+        <div class="rc-field"><label class="rc-label">One thing you'd do differently tomorrow</label><textarea class="rc-ta" id="rcNext" placeholder="A small adjustment, not a new resolution…"></textarea></div>
+        <button class="rc-save" onclick="saveReflection()">Save reflection</button>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="dash-side">
+
+      <div class="ds-sect">
+        <p class="ds-title">Clarity score</p>
+        <div class="clarity-ring">
+          <p class="cr-num" id="crNum">0%</p>
+          <p class="cr-label">habits completed this week</p>
+          <div class="cr-bar"><div class="cr-fill" id="crFill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="ds-sect">
+        <p class="ds-title">Key insights</p>
+        <div id="insightChips"></div>
+      </div>
+
+      <div class="ds-sect">
+        <p class="ds-title">This week</p>
+        <div class="week-grid" id="weekGrid"></div>
+        <p style="font-size:11px;font-weight:300;color:var(--faint);margin-top:4px;letter-spacing:.03em" id="weekLabel">0/7 days active</p>
+      </div>
+
+      <div class="ds-sect">
+        <p class="ds-title">Focus timer</p>
+        <div class="timer-card">
+          <p class="timer-head">Deep work session</p>
+          <p class="timer-display" id="timerDisplay">25:00</p>
+          <div class="timer-btns">
+            <button class="t-btn" id="timerStartBtn" onclick="timerToggle()">Start</button>
+            <button class="t-btn" onclick="timerReset(25)">25m</button>
+            <button class="t-btn" onclick="timerReset(5)">5m</button>
+            <button class="t-btn" onclick="timerReset(45)">45m</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-sect">
+        <p class="ds-title">Data &amp; export</p>
+        <div class="export-strip">
+          <button class="exp-btn" onclick="exportData()">Export my data (JSON)</button>
+          <button class="exp-btn" onclick="exportText()">Export as plain text</button>
+          <button class="exp-btn danger" onclick="resetData()">Clear all data &amp; reset</button>
+        </div>
+        <p style="font-size:10px;font-weight:300;color:var(--faint);margin-top:10px;line-height:1.6">Your data is stored locally in this browser only. It is never sent anywhere.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- edit habit overlay -->
+<div class="overlay" id="editOverlay">
+  <div class="edit-modal">
+    <p class="edit-modal-title">Edit habit</p>
+    <div class="em-field"><label class="em-label">Habit name</label><input class="em-input" id="emName" type="text"></div>
+    <div class="em-field"><label class="em-label">Purpose</label><input class="em-input" id="emPurpose" type="text"></div>
+    <div class="em-field"><label class="em-label">Daily action (small)</label><textarea class="em-input em-ta" id="emAction"></textarea></div>
+    <div class="em-field"><label class="em-label">Minimum version (hard days)</label><input class="em-input" id="emMin" type="text"></div>
+    <div class="em-row">
+      <button class="d-btn d-btn-line" onclick="closeEdit()">Cancel</button>
+      <button class="d-btn d-btn-fill" onclick="saveEdit()">Save habit</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── STATE ── */
+const S = {
+  survey: JSON.parse(localStorage.getItem('mirror_survey') || 'null'),
+  habits: JSON.parse(localStorage.getItem('mirror_habits') || 'null'),
+  checks: JSON.parse(localStorage.getItem('mirror_checks') || '{}'),
+  reflections: JSON.parse(localStorage.getItem('mirror_reflections') || '{}'),
+  streak: parseInt(localStorage.getItem('mirror_streak') || '0'),
+  lastActive: localStorage.getItem('mirror_lastActive') || ''
+};
+
+function save(key, val) {
+  S[key] = val;
+  localStorage.setItem('mirror_' + key, JSON.stringify(val));
+}
+
+/* ── ROUTING ── */
+function goPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  if (id === 'dash-page') renderDash();
+}
+
+/* ── TOAST ── */
+function toast(msg, dur = 2400) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+
+/* ── SURVEY ── */
+const STEPS = [
+  { area: 'Life area', q: 'What area of life do you most want to improve?', hint: 'Pick what feels most pressing — you can always revisit others later.', ph: 'Describe it in your own words…', chips: ['Career & work', 'Discipline & focus', 'Health & energy', 'Confidence', 'Relationships', 'Daily routine', 'Finances', 'Personal growth'] },
+  { area: 'Your problem', q: 'What problem are you facing right now?', hint: 'Be specific and honest. No one else will read this.', ph: 'The thing I keep running into is…', chips: null },
+  { area: 'Your future', q: 'What do you want your life to look like in 1–2 years?', hint: 'Not the safe answer. The real one.', ph: 'In two years, I want to be…', chips: null },
+  { area: 'The blocker', q: "What's stopping you?", hint: 'One thing — the thing that, if removed, would change everything.', ph: "If I'm honest, what's really stopping me is…", chips: null },
+  { area: 'Your routine', q: 'What does your current daily routine look like?', hint: 'Morning to night — rough sketch is fine.', ph: 'I usually wake up at… and spend my days…', chips: null },
+  { area: 'Available time', q: 'How much time can you realistically give to improving yourself each day?', hint: "Be honest — 10 minutes of consistency beats 2 hours once a week.", ph: 'I can realistically dedicate…', chips: ['5–10 minutes', '15–20 minutes', '30 minutes', '1 hour', 'More than 1 hour'] }
+];
+let sCur = 0;
+const sAnswers = {};
+
+function sRender() {
+  const step = STEPS[sCur];
+  document.getElementById('sArea').textContent = step.area;
+  document.getElementById('sQ').textContent = step.q;
+  document.getElementById('sHint').textContent = step.hint;
+  document.getElementById('sTa').placeholder = step.ph;
+  document.getElementById('sTa').value = sAnswers[sCur] || '';
+  document.getElementById('sBk').style.visibility = sCur === 0 ? 'hidden' : 'visible';
+  document.getElementById('sNxt').textContent = sCur === STEPS.length - 1 ? 'See my mirror' : 'Continue';
+  const pct = ((sCur) / STEPS.length * 100).toFixed(0);
+  document.getElementById('sProgBar').style.width = pct + '%';
+  const labels = STEPS.map((s, i) => `<span class="s-prog-label${i === sCur ? ' active' : ''}">${s.area}</span>`).join('');
+  document.getElementById('sProgLabels').innerHTML = labels;
+  const cw = document.getElementById('sChips');
+  if (step.chips) {
+    cw.style.display = 'flex';
+    cw.innerHTML = step.chips.map(c => `<button class="s-chip${sAnswers[sCur] === c ? ' on' : ''}" onclick="pickChip(this,'${c}')">${c}</button>`).join('');
+  } else { cw.style.display = 'none'; cw.innerHTML = ''; }
+}
+
+function pickChip(el, val) {
+  document.querySelectorAll('#sChips .s-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  sAnswers[sCur] = val;
+  document.getElementById('sTa').value = val;
+}
+
+function sNext() {
+  const ta = document.getElementById('sTa').value.trim();
+  if (ta) sAnswers[sCur] = ta;
+  if (!sAnswers[sCur]) { toast('Please answer before continuing'); return; }
+  if (sCur < STEPS.length - 1) { sCur++; sRender(); }
+  else { buildPlan(); goPage('dash-page'); }
+}
+
+function sBack() { if (sCur > 0) { sCur--; sRender(); } }
+
+/* ── PLAN GENERATION ── */
+function buildPlan() {
+  const a = sAnswers;
+  const area = a[0] || 'personal growth';
+  const problem = a[1] || 'feeling stuck';
+  const future = a[2] || 'a better version of myself';
+  const blocker = a[3] || 'unclear obstacles';
+  const routine = a[4] || 'no set routine';
+  const time = a[5] || '15–20 minutes';
+
+  const survey = { area, problem, future, blocker, routine, time, completedAt: new Date().toISOString() };
+  save('survey', survey);
+
+  // Generate rule-based habits
+  const habitBank = {
+    'Career & work': [
+      { name: 'One deep work block', purpose: 'Build focus capacity', action: 'Work on one meaningful task — no phone, no tabs — for ' + time, cue: 'Right after morning coffee', min: 'Just open the task and read it once', freq: 'Daily' },
+      { name: 'End-of-day capture', purpose: 'Close loops and reduce anxiety', action: 'Write 3 things you accomplished and the top task for tomorrow', cue: 'When you close your laptop', min: 'Write just the one top task for tomorrow', freq: 'Weekdays' }
+    ],
+    'Discipline & focus': [
+      { name: 'Morning intention', purpose: 'Start with direction, not reaction', action: 'Before opening your phone, write one sentence: "Today I will…"', cue: 'Right after waking up', min: 'Just say it silently in your head', freq: 'Daily' },
+      { name: 'Single-task block', purpose: 'Train distraction resistance', action: 'Choose one task. Set a timer for ' + time + '. Nothing else until it rings.', cue: 'First thing after lunch', min: '5 minutes on the task — then you\'re free to stop', freq: 'Daily' }
+    ],
+    'Health & energy': [
+      { name: 'Movement minimum', purpose: 'Build physical baseline', action: 'Walk for 10 minutes outside — no podcast, just walking', cue: 'After your biggest meal of the day', min: '5 minutes of stretching at your desk', freq: 'Daily' },
+      { name: 'Sleep anchor', purpose: 'Protect recovery', action: 'Be in bed with screens off by the same time each night', cue: 'Set a nightly alarm 30 minutes before bed', min: 'Just put the phone down 10 minutes earlier than usual', freq: 'Daily' }
+    ],
+    'Confidence': [
+      { name: 'One brave action', purpose: 'Build confidence through evidence', action: 'Do one small thing you\'ve been avoiding — a message, a question, a statement', cue: 'Morning, before checking notifications', min: 'Write down what you\'d do if you weren\'t afraid', freq: 'Daily' }
+    ],
+    'Relationships': [
+      { name: 'One genuine connection', purpose: 'Invest in people intentionally', action: 'Send one message, make one call, or have one real conversation today', cue: 'During your first break', min: 'Think of one person you appreciate and why', freq: 'Daily' }
+    ],
+    'Daily routine': [
+      { name: 'Anchor habit', purpose: 'Build a reliable daily structure', action: 'Do one thing at the same time every day — whatever you choose', cue: 'Pick a time and set a daily reminder', min: 'Show up for 2 minutes, even if you do nothing else', freq: 'Daily' }
+    ],
+    'Finances': [
+      { name: 'Daily financial check', purpose: 'Build money awareness', action: 'Spend 5 minutes reviewing what you spent yesterday', cue: 'With your morning coffee', min: 'Just open your bank app and glance', freq: 'Daily' }
+    ],
+    'Personal growth': [
+      { name: 'Reading block', purpose: 'Feed your mind deliberately', action: 'Read 5–10 pages of something that challenges you', cue: 'Before bed, after putting your phone away', min: 'Read one paragraph — even one is better than zero', freq: 'Daily' }
+    ]
+  };
+
+  const defaultHabits = [
+    { name: 'Daily reflection', purpose: 'Build self-awareness over time', action: 'Write 2 sentences about your day — what worked, what didn\'t', cue: 'When you get into bed', min: 'Just write one word describing how today felt', freq: 'Daily' }
+  ];
+
+  let habits = habitBank[area] || defaultHabits;
+  if (habits.length > 2) habits = habits.slice(0, 2);
+  habits.push(defaultHabits[0]);
+  habits = habits.map((h, i) => ({ ...h, id: i, done: false }));
+  save('habits', habits);
+
+  // Streak
+  const today = new Date().toDateString();
+  if (S.lastActive !== today) {
+    const wasYesterday = S.lastActive === new Date(Date.now() - 86400000).toDateString();
+    const newStreak = wasYesterday ? S.streak + 1 : 1;
+    localStorage.setItem('mirror_streak', newStreak);
+    localStorage.setItem('mirror_lastActive', today);
+  }
+}
+
+/* ── DASHBOARD ── */
+function renderDash() {
+  if (!S.survey) buildDefaultDemo();
+  const sv = S.survey;
+  const habits = S.habits || [];
+  const today = new Date().toDateString();
+  const checks = S.checks[today] || {};
+
+  // top bar
+  document.getElementById('dName').textContent = 'Working on: ' + (sv.area || 'Personal growth');
+  document.getElementById('dSince').textContent = 'Area: ' + (sv.area || '—') + ' · Time available: ' + (sv.time || '—');
+  const done = habits.filter(h => checks[h.id]).length;
+  const pct = habits.length ? Math.round(done / habits.length * 100) : 0;
+  document.getElementById('dStreak').textContent = (localStorage.getItem('mirror_streak') || 1) + ' day' + (localStorage.getItem('mirror_streak') == 1 ? '' : 's');
+  document.getElementById('dToday').textContent = done + '/' + habits.length;
+  document.getElementById('dClarity').textContent = pct + '%';
+  document.getElementById('crNum').textContent = pct + '%';
+  document.getElementById('crFill').style.width = pct + '%';
+
+  // avatar
+  const initials = (sv.area || 'G').substring(0, 1).toUpperCase();
+  document.getElementById('dAvatar').textContent = initials;
+
+  // today card
+  const now = new Date();
+  const h = now.getHours();
+  const greeting = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  const dayStr = now.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' });
+  document.getElementById('todayDate').textContent = dayStr;
+  document.getElementById('todayHead').textContent = greeting + '. Here\'s your focus for today.';
+  document.getElementById('todaySub').textContent = 'You\'re working on ' + (sv.area || 'personal growth').toLowerCase() + '. ' + habits.length + ' habit' + (habits.length === 1 ? '' : 's') + ' waiting.';
+  document.getElementById('todayScoreNum').textContent = pct + '%';
+  document.getElementById('todayBarFill').style.width = pct + '%';
+  document.getElementById('habitsTag').textContent = done + ' of ' + habits.length + ' done';
+
+  // habits
+  renderHabits();
+
+  // mirror
+  const mc = document.getElementById('mirrorCards');
+  mc.innerHTML = `
+    <div class="mc"><p class="mc-l">Where you are</p><p class="mc-h">Your current reality</p><p class="mc-p">"${sv.problem || 'You haven\'t described your problem yet.'}"</p><span class="mc-tag">${sv.area || 'General'}</span></div>
+    <div class="mc"><p class="mc-l">Where you want to be</p><p class="mc-h">Your stated goal</p><p class="mc-p">"${sv.future || 'Define your desired future in the survey.'}"</p><span class="mc-tag">1–2 year vision</span></div>
+    <div class="mc"><p class="mc-l">What\'s in the way</p><p class="mc-h">The real blocker</p><p class="mc-p">"${sv.blocker || 'You haven\'t named your blocker yet.'}"</p><span class="mc-tag">Named obstacle</span></div>`;
+
+  // action card
+  const insights = generateInsights(sv);
+  document.getElementById('acHead').textContent = '"' + insights.headline + '"';
+  document.getElementById('acBody').textContent = insights.body;
+  const stepsEl = document.getElementById('acSteps');
+  stepsEl.innerHTML = insights.steps.map(s => `<li class="ac-step">${s}</li>`).join('');
+
+  // nudge
+  const nudgeEl = document.getElementById('nudgeWrap');
+  nudgeEl.innerHTML = insights.nudges.map((n, i) => `<div class="nudge-item"><span class="nudge-n">${i + 1}</span><span class="nudge-t">${n}</span></div>`).join('');
+
+  // insights sidebar
+  const ic = document.getElementById('insightChips');
+  ic.innerHTML = `
+    <div class="insight-chip"><p class="ic-label">Your focus area</p><p class="ic-val">${sv.area || '—'}</p><p class="ic-sub">Primary area you want to transform</p></div>
+    <div class="insight-chip"><p class="ic-label">Time available</p><p class="ic-val">${sv.time || '—'}</p><p class="ic-sub">Habits are calibrated to this window</p></div>
+    <div class="insight-chip"><p class="ic-label">Main blocker</p><p class="ic-val">${(sv.blocker || 'Not defined').substring(0, 32)}${(sv.blocker || '').length > 32 ? '…' : ''}</p><p class="ic-sub">Named in your survey</p></div>`;
+
+  // week grid
+  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  const wg = document.getElementById('weekGrid');
+  let activeDays = 0;
+  wg.innerHTML = days.map((d, i) => {
+    const date = new Date(); date.setDate(date.getDate() - date.getDay() + 1 + i);
+    const ds = date.toDateString();
+    const c = S.checks[ds]; const hasData = c && Object.keys(c).length > 0;
+    const hasDone = c && Object.values(c).some(Boolean);
+    if (hasDone) activeDays++;
+    const cls = hasDone ? 'done' : (hasData ? 'partial' : '');
+    return `<div class="week-day"><span class="week-day-l">${d}</span><button class="week-dot ${cls}" title="${ds}"></button></div>`;
+  }).join('');
+  document.getElementById('weekLabel').textContent = activeDays + '/7 days active this week';
+
+  // reflection date
+  document.getElementById('reflDate').textContent = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+
+  // load saved reflection
+  const todayRefl = S.reflections[today] || {};
+  if (todayRefl.well) document.getElementById('rcWell').value = todayRefl.well;
+  if (todayRefl.block) document.getElementById('rcBlock').value = todayRefl.block;
+  if (todayRefl.next) document.getElementById('rcNext').value = todayRefl.next;
+}
+
+function renderHabits() {
+  const habits = S.habits || [];
+  const today = new Date().toDateString();
+  const checks = S.checks[today] || {};
+  const wrap = document.getElementById('habitsWrap');
+  wrap.innerHTML = habits.map(h => {
+    const done = !!checks[h.id];
+    return `<div class="habit-row ${done ? 'done' : ''}" id="hr-${h.id}" onclick="toggleHabit(${h.id},event)">
+      <div class="habit-check"><span class="habit-check-icon">✓</span></div>
+      <div class="habit-info">
+        <p class="habit-name">${h.name}</p>
+        <p class="habit-desc">${h.action}</p>
+        <div class="habit-meta">
+          <span class="habit-tag">${h.cue}</span>
+          <span class="habit-time">${h.freq} · Min: ${h.min}</span>
+        </div>
+      </div>
+      <button class="habit-edit-btn" onclick="openEdit(${h.id},event)">Edit</button>
+    </div>
+    <div class="missed-modal" id="mm-${h.id}">
+      <p class="missed-q">What got in the way today?</p>
+      <div class="missed-opts">
+        ${['Forgot','Too hard','No time','Low energy','Distractions','Something else'].map(o => `<button class="missed-opt" onclick="handleMissed(${h.id},'${o}')">${o}</button>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleHabit(id, e) {
+  if (e.target.classList.contains('habit-edit-btn') || e.target.closest('.missed-modal')) return;
+  const today = new Date().toDateString();
+  const checks = S.checks[today] || {};
+  if (checks[id]) {
+    // unchecking — show missed modal
+    checks[id] = false;
+    save('checks', { ...S.checks, [today]: checks });
+    document.getElementById('mm-' + id).classList.toggle('open');
+  } else {
+    checks[id] = true;
+    document.getElementById('mm-' + id).classList.remove('open');
+    save('checks', { ...S.checks, [today]: checks });
+    toast('Habit done. Keep going.');
+  }
+  renderHabits();
+  updateTodayScore();
+}
+
+function handleMissed(id, reason) {
+  document.getElementById('mm-' + id).classList.remove('open');
+  const msgs = { 'Forgot': 'Try linking it to something you already do.', 'Too hard': 'Consider using the minimum version next time.', 'No time': 'Try moving it to a different part of your day.', 'Low energy': 'The minimum version counts. Show up, even briefly.', 'Distractions': 'Try turning your phone over during this habit.', 'Something else': 'Life happens. Tomorrow is a fresh start.' };
+  toast(msgs[reason] || 'Tomorrow is a fresh start.');
+}
+
+function updateTodayScore() {
+  const habits = S.habits || [];
+  const today = new Date().toDateString();
+  const checks = S.checks[today] || {};
+  const done = habits.filter(h => checks[h.id]).length;
+  const pct = habits.length ? Math.round(done / habits.length * 100) : 0;
+  document.getElementById('todayScoreNum').textContent = pct + '%';
+  document.getElementById('todayBarFill').style.width = pct + '%';
+  document.getElementById('habitsTag').textContent = done + ' of ' + habits.length + ' done';
+  document.getElementById('dToday').textContent = done + '/' + habits.length;
+  document.getElementById('dClarity').textContent = pct + '%';
+  document.getElementById('crNum').textContent = pct + '%';
+  document.getElementById('crFill').style.width = pct + '%';
+}
+
+/* ── EDIT HABIT ── */
+let editId = null;
+function openEdit(id, e) {
+  e.stopPropagation();
+  editId = id;
+  const h = S.habits.find(x => x.id === id);
+  if (!h) return;
+  document.getElementById('emName').value = h.name;
+  document.getElementById('emPurpose').value = h.purpose;
+  document.getElementById('emAction').value = h.action;
+  document.getElementById('emMin').value = h.min;
+  document.getElementById('editOverlay').classList.add('open');
+}
+function closeEdit() { document.getElementById('editOverlay').classList.remove('open'); editId = null; }
+function saveEdit() {
+  if (editId === null) return;
+  const habits = S.habits.map(h => h.id === editId ? { ...h, name: document.getElementById('emName').value, purpose: document.getElementById('emPurpose').value, action: document.getElementById('emAction').value, min: document.getElementById('emMin').value } : h);
+  save('habits', habits);
+  closeEdit(); renderHabits(); toast('Habit updated.');
+}
+
+/* ── REFLECTION ── */
+function saveReflection() {
+  const today = new Date().toDateString();
+  const refl = { well: document.getElementById('rcWell').value, block: document.getElementById('rcBlock').value, next: document.getElementById('rcNext').value, savedAt: new Date().toISOString() };
+  save('reflections', { ...S.reflections, [today]: refl });
+  toast('Reflection saved.');
+}
+
+/* ── INSIGHTS ENGINE ── */
+function generateInsights(sv) {
+  const a = sv.area || '';
+  const blocker = sv.blocker || '';
+  const fearWords = ['afraid', 'fear', 'scared', 'what if', 'fail', 'embarrass', 'judge'];
+  const procrastWords = ['procrastin', 'later', 'tomorrow', 'start', 'begin', 'keep putting'];
+  const timeWords = ['time', 'busy', 'no time', 'schedule', 'hours'];
+  const isFear = fearWords.some(w => blocker.toLowerCase().includes(w));
+  const isProcrast = procrastWords.some(w => blocker.toLowerCase().includes(w));
+  const isTime = timeWords.some(w => blocker.toLowerCase().includes(w));
+
+  if (isFear) return {
+    headline: "The fear is information, not a stop sign.",
+    body: "What you're describing isn't a lack of ability — it's a nervous system response to perceived risk. The antidote isn't courage, it's evidence. Small actions that contradict the fear, done consistently, rebuild your self-concept from the inside out.",
+    steps: ["Do one tiny version of the thing you fear today — so small it almost doesn't count.", "Write down what actually happened afterwards (usually: nothing terrible).", "Repeat until the evidence outweighs the story."],
+    nudges: ["What's the smallest possible version of the scary thing you could try in the next 24 hours?", "If the outcome were neutral — just a learning — would you still hesitate?", "What would you do if no one you know could find out?"]
+  };
+  if (isProcrast) return {
+    headline: "Starting is the only habit that matters first.",
+    body: "Procrastination isn't laziness — it's usually avoidance of a negative feeling associated with the task. The solution isn't willpower. It's reducing the starting cost until it's nearly zero. Two minutes of action changes the emotional equation.",
+    steps: ["Identify the exact first physical action (open the file, write one sentence, send one message).", "Do only that. Give yourself full permission to stop after 2 minutes.", "Notice that you almost never stop at 2 minutes once you've started."],
+    nudges: ["What is the exact first micro-action you'd need to take? Not the project — the first 30 seconds.", "Is there a specific time of day when this feels less difficult?", "What story are you telling yourself about why this is harder than it is?"]
+  };
+  if (isTime) return {
+    headline: "You don't need more time. You need one protected slot.",
+    body: "Time isn't the real constraint — priority is. Everyone has the same hours. The question is which of your existing activities could be replaced, shortened, or moved to create a protected window for what actually matters.",
+    steps: ["Audit tomorrow: write down every hour and what you did with it.", "Find one 15-minute slot that's currently wasted and protect it for your priority habit.", "Guard that slot like a meeting you can't cancel."],
+    nudges: ["What's one thing you did this week that mattered less than your stated goal?", "What would you give up watching, scrolling, or doing to get 15 free minutes?", "What would your routine look like if this was your top priority — not just your stated one?"]
+  };
+  return {
+    headline: "Clarity is the first action.",
+    body: "Before building habits, you need a clear and honest picture of where you are, where you want to go, and the real obstacle. You've started that work. Now the key is: don't think, act. Start the smallest possible habit today and let the evidence build.",
+    steps: ["Review your mirror honestly — are these your real answers, or the safe ones?", "Pick one habit and do it today, even a 2-minute version.", "At the end of the day, write one sentence about what you actually did."],
+    nudges: ["Have you described your real goal — or the one that feels acceptable to admit?", "What would you tell a close friend who described your exact situation?", "What's the one change that would have the biggest ripple effect in your life right now?"]
+  };
+}
+
+/* ── DEFAULT DEMO DATA ── */
+function buildDefaultDemo() {
+  const survey = { area: 'Career & work', problem: 'I have been in the same role for two years and feel like I\'m executing someone else\'s vision. I want to build something of my own but keep waiting for the "right time."', future: 'In two years I want to be running a small product I built myself, earning enough to have real options.', blocker: 'Honestly, I think I\'m afraid of what it means about me if I try and it doesn\'t work.', routine: 'Wake up at 7, commute, work 9–6, doom-scroll evenings, sleep late.', time: '30 minutes', completedAt: new Date().toISOString() };
+  save('survey', survey);
+  const habits = [
+    { id: 0, name: 'One deep work block', purpose: 'Build focused output capacity', action: 'Work on one meaningful task with phone away for 30 minutes', cue: 'Right after morning coffee', min: 'Just open the task and read it for 2 minutes', freq: 'Daily', done: false },
+    { id: 1, name: 'End-of-day capture', purpose: 'Close mental loops before sleep', action: 'Write 3 things accomplished + top task for tomorrow', cue: 'When you close your laptop', min: 'Just write the one top task for tomorrow', freq: 'Weekdays', done: false },
+    { id: 2, name: 'Evening reflection', purpose: 'Build self-awareness over time', action: 'Write 2 sentences — what worked today, what didn\'t', cue: 'Before opening Netflix or YouTube', min: 'Just write one word describing how today felt', freq: 'Daily', done: false }
+  ];
+  save('habits', habits);
+  localStorage.setItem('mirror_streak', '1');
+  localStorage.setItem('mirror_lastActive', new Date().toDateString());
+}
+
+/* ── TIMER ── */
+let timerSec = 25 * 60, timerInt = null, timerRunning = false;
+function timerDisplay(s) {
+  const m = Math.floor(s / 60), sec = s % 60;
+  document.getElementById('timerDisplay').textContent = String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+}
+function timerToggle() {
+  if (timerRunning) {
+    clearInterval(timerInt); timerRunning = false;
+    document.getElementById('timerStartBtn').textContent = 'Resume';
+    document.getElementById('timerStartBtn').classList.remove('active');
+  } else {
+    timerRunning = true;
+    document.getElementById('timerStartBtn').textContent = 'Pause';
+    document.getElementById('timerStartBtn').classList.add('active');
+    timerInt = setInterval(() => {
+      timerSec--;
+      timerDisplay(timerSec);
+      if (timerSec <= 0) { clearInterval(timerInt); timerRunning = false; document.getElementById('timerStartBtn').textContent = 'Start'; document.getElementById('timerStartBtn').classList.remove('active'); toast('Focus session complete. Take a break.', 4000); timerSec = 25 * 60; timerDisplay(timerSec); }
+    }, 1000);
+  }
+}
+function timerReset(m) { clearInterval(timerInt); timerRunning = false; timerSec = m * 60; timerDisplay(timerSec); document.getElementById('timerStartBtn').textContent = 'Start'; document.getElementById('timerStartBtn').classList.remove('active'); }
+
+/* ── EXPORT & RESET ── */
+function exportData() {
+  const data = { survey: S.survey, habits: S.habits, checks: S.checks, reflections: S.reflections, exported: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mirror-data.json'; a.click();
+  toast('Data exported.');
+}
+function exportText() {
+  const sv = S.survey || {}; const habits = S.habits || [];
+  let txt = '=== MIRROR — MY GROWTH PLAN ===\n\n';
+  txt += 'Area: ' + (sv.area || '—') + '\n';
+  txt += 'Problem: ' + (sv.problem || '—') + '\n';
+  txt += 'Goal: ' + (sv.future || '—') + '\n';
+  txt += 'Blocker: ' + (sv.blocker || '—') + '\n\n';
+  txt += '=== MY HABITS ===\n\n';
+  habits.forEach(h => { txt += '• ' + h.name + '\n  ' + h.action + '\n  Minimum: ' + h.min + '\n\n'; });
+  const blob = new Blob([txt], { type: 'text/plain' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mirror-plan.txt'; a.click();
+  toast('Plan exported as text.');
+}
+function resetData() {
+  if (!confirm('Clear all your data and start fresh? This cannot be undone.')) return;
+  ['survey', 'habits', 'checks', 'reflections', 'streak', 'lastActive'].forEach(k => localStorage.removeItem('mirror_' + k));
+  location.reload();
+}
+
+/* ── INIT ── */
+sRender();
+if (!S.habits) buildDefaultDemo();
+</script>
+</body>
+</html>

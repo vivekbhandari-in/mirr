@@ -1,0 +1,49 @@
+{
+  "survey": {
+    "area": "Career & work",
+    "problem": "I have been in the same role for two years and feel like I'm executing someone else's vision. I want to build something of my own but keep waiting for the \"right time.\"",
+    "future": "In two years I want to be running a small product I built myself, earning enough to have real options.",
+    "blocker": "Honestly, I think I'm afraid of what it means about me if I try and it doesn't work.",
+    "routine": "Wake up at 7, commute, work 9–6, doom-scroll evenings, sleep late.",
+    "time": "30 minutes",
+    "completedAt": "2026-11-01T00:00:00.000Z"
+  },
+  "habits": [
+    {
+      "id": 0,
+      "name": "One deep work block",
+      "purpose": "Build focused output capacity",
+      "action": "Work on one meaningful task with phone away for 30 minutes",
+      "cue": "Right after morning coffee",
+      "min": "Just open the task and read it for 2 minutes",
+      "freq": "Daily",
+      "done": false
+    },
+    {
+      "id": 1,
+      "name": "End-of-day capture",
+      "purpose": "Close mental loops before sleep",
+      "action": "Write 3 things accomplished + top task for tomorrow",
+      "cue": "When you close your laptop",
+      "min": "Just write the one top task for tomorrow",
+      "freq": "Weekdays",
+      "done": false
+    },
+    {
+      "id": 2,
+      "name": "Evening reflection",
+      "purpose": "Build self-awareness over time",
+      "action": "Write 2 sentences — what worked today, what didn't",
+      "cue": "Before opening Netflix or YouTube",
+      "min": "Just write one word describing how today felt",
+      "freq": "Daily",
+      "done": false
+    }
+  ],
+  "checks": {},
+  "reflections": {},
+  "streak": 1,
+  "lastActive": "Mon Nov 02 2026",
+  "exported": "2026-11-02T00:00:00.000Z"
+}
+
