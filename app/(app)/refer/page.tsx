@@ -2,13 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Check, Copy, Share2, ArrowLeft } from "lucide-react";
 
 export default function ReferPage() {
   const [copied, setCopied] = useState(false);
   const referralCode = "GROW30";
-  const referralUrl = typeof window !== "undefined"
-    ? `${window.location.origin}/signup?ref=${referralCode}`
-    : `https://mirr.app/signup?ref=${referralCode}`;
+  const referralUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/signup?ref=${referralCode}`
+      : `https://mirr.app/signup?ref=${referralCode}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralUrl);
@@ -17,66 +19,78 @@ export default function ReferPage() {
   };
 
   return (
-    <div className="min-h-screen bg-paper text-ink selection:bg-gold/20 selection:text-ink">
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20 selection:text-foreground">
       {/* Topbar */}
-      <header className="bg-white border-b border-paper3 px-6 sm:px-8 py-4 flex items-center justify-between">
-        <Link href="/dashboard" className="font-serif italic text-lg text-ink">
-          Mirr<em className="text-gold2 not-italic">.</em>
+      <header className="h-14 bg-surface/80 backdrop-blur-md border-b border-border px-6 sm:px-8 flex items-center justify-between sticky top-0 z-30">
+        <Link href="/dashboard" className="inline-flex items-center gap-2 group">
+          <span className="w-6 h-6 rounded-md bg-surface-elevated border border-border flex items-center justify-center text-primary font-mono text-xs font-semibold group-hover:border-primary/50 transition-colors">
+            M
+          </span>
+          <span className="font-sans text-sm font-semibold tracking-tight text-foreground">
+            Mirr<span className="text-primary">.</span>
+          </span>
         </Link>
         <Link
           href="/dashboard"
-          className="text-xs font-light text-muted hover:text-ink transition-colors"
+          className="text-xs font-mono text-foreground-secondary hover:text-foreground transition-colors flex items-center gap-1.5"
         >
-          ← Back to dashboard
+          <ArrowLeft size={14} />
+          <span>Dashboard</span>
         </Link>
       </header>
 
-      <main className="max-w-[640px] mx-auto py-12 px-6">
-        <div className="bg-white border border-paper3 rounded-md p-8 sm:p-10 shadow-sm text-center">
-          <span className="w-2.5 h-2.5 rounded-full bg-gold inline-block mb-3 animate-pulse-subtle" />
-          <p className="text-[10px] font-medium tracking-[0.1em] text-gold2 uppercase mb-2">
-            Referral loop
+      <main className="max-w-[580px] mx-auto py-16 px-6">
+        <div className="bg-surface border border-border rounded-modal p-8 sm:p-10 shadow-2xl text-center">
+          <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 text-primary mx-auto flex items-center justify-center mb-4">
+            <Share2 size={18} />
+          </div>
+
+          <p className="text-[10px] font-mono tracking-widest text-primary uppercase mb-2">
+            Referral Circle
           </p>
 
-          <h1 className="font-serif text-3xl sm:text-4xl text-ink leading-tight mb-3">
+          <h1 className="font-sans text-2xl sm:text-3xl font-bold text-foreground tracking-tight mb-3">
             Give 30 days. Get 30 days.
           </h1>
 
-          <p className="text-xs sm:text-sm font-light text-muted leading-relaxed max-w-[460px] mx-auto mb-8">
-            When you share Mirr with a friend or colleague, they get 30 days full access with zero credit card risk. When they continue, you get 30 free days added to your account.
+          <p className="text-xs sm:text-sm text-foreground-secondary leading-relaxed max-w-[440px] mx-auto mb-8">
+            When you invite an ambitious colleague or friend to Mirr, they get 30 days full access with zero credit card risk. When they begin their contract, you get 30 days added to your account.
           </p>
 
           {/* Referral link box */}
-          <div className="bg-paper border border-paper3 rounded-sm p-4 text-left mb-6">
-            <label className="block text-[10px] font-medium uppercase tracking-[0.06em] text-muted mb-1.5">
-              Your unique invite link
-            </label>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                readOnly
-                value={referralUrl}
-                className="w-full bg-white border border-paper3 rounded-sm px-3 py-2 text-xs text-ink select-all outline-none font-mono"
-              />
-              <button
-                type="button"
-                onClick={handleCopy}
-                className="text-xs font-medium bg-gold hover:bg-gold2 text-ink px-4 py-2 rounded-sm flex-shrink-0 transition-colors"
-              >
-                {copied ? "Copied!" : "Copy link"}
-              </button>
+          <div className="bg-background border border-border rounded-btn p-3.5 text-left mb-6 flex items-center justify-between gap-3">
+            <div className="truncate">
+              <p className="text-[10px] font-mono uppercase tracking-wider text-foreground-muted mb-0.5">
+                Your personal invitation link
+              </p>
+              <p className="font-mono text-xs text-foreground truncate">{referralUrl}</p>
             </div>
+            <button
+              onClick={handleCopy}
+              className="shrink-0 h-9 px-3.5 rounded-btn bg-surface-elevated hover:bg-surface-muted border border-border text-foreground text-xs font-medium transition-colors flex items-center gap-1.5"
+            >
+              {copied ? (
+                <>
+                  <Check size={14} className="text-success" />
+                  <span className="text-success">Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={14} />
+                  <span>Copy</span>
+                </>
+              )}
+            </button>
           </div>
 
-          {/* Stats summary */}
-          <div className="grid grid-cols-2 gap-4 text-center py-4 border-t border-paper3">
-            <div>
-              <p className="font-serif text-2xl italic text-ink">0</p>
-              <p className="text-[11px] text-faint">Friends joined</p>
+          <div className="border-t border-border pt-6 grid grid-cols-2 gap-4 text-center">
+            <div className="p-3 bg-surface-elevated/50 border border-border/50 rounded-btn">
+              <span className="block font-mono text-xl font-bold text-foreground">0</span>
+              <span className="text-[11px] text-foreground-muted font-mono">Members invited</span>
             </div>
-            <div>
-              <p className="font-serif text-2xl italic text-gold2">0</p>
-              <p className="text-[11px] text-faint">Free days earned</p>
+            <div className="p-3 bg-surface-elevated/50 border border-border/50 rounded-btn">
+              <span className="block font-mono text-xl font-bold text-primary">0</span>
+              <span className="text-[11px] text-foreground-muted font-mono">Days earned</span>
             </div>
           </div>
         </div>
@@ -84,4 +98,3 @@ export default function ReferPage() {
     </div>
   );
 }
-

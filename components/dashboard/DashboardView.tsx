@@ -63,7 +63,14 @@ export function DashboardView() {
   );
 
   const [mounted, setMounted] = useState(false);
-  const [activeTab, setActiveTab] = useState<IdentityDashboardTab>("today");
+  const initialTab = useMemo<IdentityDashboardTab>(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam && ["today", "mirror", "reflect", "evidence", "drift", "settings"].includes(tabParam)) {
+      return tabParam as IdentityDashboardTab;
+    }
+    return "today";
+  }, [searchParams]);
+  const [activeTab, setActiveTab] = useState<IdentityDashboardTab>(initialTab);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
@@ -72,6 +79,14 @@ export function DashboardView() {
   const [isMinimumModalOpen, setIsMinimumModalOpen] = useState(false);
   const [isMissedModalOpen, setIsMissedModalOpen] = useState(false);
   const [isEditMirrorOpen, setIsEditMirrorOpen] = useState(false);
+
+  // Sync tab if URL search parameter changes
+  useEffect(() => {
+    const tabParam = searchParams.get("tab") as IdentityDashboardTab | null;
+    if (tabParam && ["today", "mirror", "reflect", "evidence", "drift", "settings"].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
 
   // Toast state (bottom-center, replaces instantly, 2.2s auto-dismiss)
   const [toastMsg, setToastMsg] = useState("");

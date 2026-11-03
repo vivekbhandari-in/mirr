@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Mail, ArrowRight, Check, AlertCircle } from "lucide-react";
 
 interface AuthFormProps {
   mode: "login" | "signup";
@@ -72,53 +73,64 @@ export function AuthForm({ mode }: AuthFormProps) {
   };
 
   return (
-    <div className="w-full max-w-[440px] bg-white border border-paper3 rounded-md p-8 sm:p-10 shadow-card text-ink">
+    <div className="w-full max-w-[420px] bg-surface border border-border rounded-modal p-8 sm:p-10 shadow-2xl text-foreground relative">
+      {/* Brand Header */}
       <div className="text-center mb-8">
-        <Link href="/" className="font-serif italic text-2xl text-ink inline-block mb-3">
-          Mirr<em className="text-gold2 not-italic">.</em>
+        <Link href="/" className="inline-flex items-center gap-2 group mb-5">
+          <span className="w-7 h-7 rounded-md bg-surface-elevated border border-border flex items-center justify-center text-primary font-mono text-xs font-semibold group-hover:border-primary/50 transition-colors">
+            M
+          </span>
+          <span className="font-sans text-sm font-semibold tracking-tight text-foreground">
+            Mirr<span className="text-primary">.</span>
+          </span>
         </Link>
-        <h1 className="font-serif text-2xl text-ink leading-tight mb-2">
-          {mode === "signup" ? "Create your account" : "Welcome back"}
+        <h1 className="font-sans text-2xl font-bold tracking-tight text-foreground mb-2">
+          {mode === "signup" ? "Begin your contract" : "Welcome back"}
         </h1>
-        <p className="text-xs font-light text-muted leading-relaxed">
+        <p className="text-xs text-foreground-secondary leading-relaxed max-w-[320px] mx-auto">
           {mode === "signup"
-            ? "Your journey starts here. 30 days full access, no card needed."
-            : "Sign in with your email or Google account to continue."}
+            ? "Your identity contract and daily consistency system, synced privately."
+            : "Sign in with your email or Google account to enter your sanctuary."}
         </p>
       </div>
 
       {errorMsg && (
-        <div className="mb-5 p-3 rounded-sm bg-danger/10 border border-danger/20 text-xs text-danger">
-          {errorMsg}
+        <div className="mb-5 p-3 rounded-btn bg-danger/10 border border-danger/25 text-xs text-danger flex items-start gap-2.5">
+          <AlertCircle size={16} className="shrink-0 mt-0.5" />
+          <span className="leading-relaxed">{errorMsg}</span>
         </div>
       )}
 
       {magicSent ? (
         <div className="text-center py-6">
-          <div className="w-12 h-12 rounded-full bg-gold/15 text-gold2 mx-auto flex items-center justify-center text-xl mb-4">
-            ✉
+          <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 text-primary mx-auto flex items-center justify-center mb-4">
+            <Mail size={20} />
           </div>
-          <h2 className="font-serif text-lg text-ink mb-2">Check your inbox</h2>
-          <p className="text-xs font-light text-muted leading-relaxed max-w-[320px] mx-auto mb-6">
-            We sent a secure magic link to <strong className="font-medium text-ink">{email}</strong>. Click it to sign in instantly.
+          <h2 className="font-sans text-lg font-semibold text-foreground mb-2">
+            Check your inbox
+          </h2>
+          <p className="text-xs text-foreground-secondary leading-relaxed max-w-[320px] mx-auto mb-6">
+            We sent a secure magic link to{" "}
+            <strong className="font-medium text-foreground">{email}</strong>. Click it to sign in instantly.
           </p>
           <button
             type="button"
             onClick={() => setMagicSent(false)}
-            className="text-xs text-gold2 hover:underline font-normal"
+            className="text-xs text-primary hover:text-primary-hover hover:underline transition-colors"
           >
-            Try a different email
+            Use a different email address
           </button>
         </div>
       ) : (
         <>
+          {/* Google OAuth Button */}
           <button
             type="button"
             onClick={handleGoogleSignIn}
             disabled={googleLoading}
-            className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-sm border border-paper3 bg-paper hover:bg-paper2 text-ink text-xs font-medium transition-colors mb-5 disabled:opacity-50"
+            className="w-full h-11 flex items-center justify-center gap-3 rounded-btn border border-border bg-surface-elevated hover:bg-surface-muted text-foreground text-xs font-medium transition-colors mb-5 disabled:opacity-50"
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -140,17 +152,18 @@ export function AuthForm({ mode }: AuthFormProps) {
           </button>
 
           <div className="relative flex items-center justify-center my-6">
-            <div className="border-t border-paper3 w-full" />
-            <span className="bg-white px-3 text-[10px] uppercase tracking-wider text-faint absolute">
+            <div className="border-t border-border w-full" />
+            <span className="bg-surface px-3 text-[10px] uppercase font-mono tracking-widest text-foreground-muted absolute">
               or email magic link
             </span>
           </div>
 
+          {/* Email Magic Link Form */}
           <form onSubmit={handleMagicLink} className="space-y-4">
             <div>
               <label
                 htmlFor="email"
-                className="block text-[11px] font-medium uppercase tracking-[0.05em] text-muted mb-1.5"
+                className="block text-[11px] font-mono uppercase tracking-wider text-foreground-secondary mb-1.5"
               >
                 Email address
               </label>
@@ -161,32 +174,40 @@ export function AuthForm({ mode }: AuthFormProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@domain.com"
-                className="w-full bg-paper border border-paper3 rounded-sm px-3.5 py-2.5 text-xs text-ink placeholder:text-muted/40 focus:outline-none focus:border-gold2 transition-colors font-sans"
+                className="w-full h-11 bg-background border border-border focus:border-primary rounded-btn px-3.5 text-xs text-foreground placeholder:text-foreground-muted/50 focus:outline-none transition-colors font-sans"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 px-4 rounded-sm bg-ink hover:bg-ink2 text-white text-xs font-medium tracking-[0.02em] transition-colors disabled:opacity-50"
+              className="w-full h-11 rounded-btn bg-primary hover:bg-primary-hover text-foreground-inverse text-xs font-semibold tracking-wide transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              {loading ? "Sending link..." : "Send magic link"}
+              <span>{loading ? "Sending link..." : "Send magic link"}</span>
+              <ArrowRight size={14} />
             </button>
           </form>
 
-          <div className="mt-8 text-center text-xs text-muted font-light">
+          {/* Mode Switcher */}
+          <div className="mt-8 text-center text-xs text-foreground-secondary">
             {mode === "signup" ? (
               <p>
                 Already have an account?{" "}
-                <Link href="/login" className="text-gold2 hover:underline font-normal">
+                <Link
+                  href="/login"
+                  className="text-primary hover:text-primary-hover hover:underline transition-colors font-medium ml-1"
+                >
                   Sign in
                 </Link>
               </p>
             ) : (
               <p>
                 Don&apos;t have an account yet?{" "}
-                <Link href="/signup" className="text-gold2 hover:underline font-normal">
-                  Start for free
+                <Link
+                  href="/signup"
+                  className="text-primary hover:text-primary-hover hover:underline transition-colors font-medium ml-1"
+                >
+                  Start free
                 </Link>
               </p>
             )}
@@ -196,4 +217,3 @@ export function AuthForm({ mode }: AuthFormProps) {
     </div>
   );
 }
-
