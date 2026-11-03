@@ -137,11 +137,15 @@ export default function WallOfHonestyPage() {
           <p className="text-xs sm:text-sm text-foreground-secondary leading-relaxed max-w-[460px] mx-auto">
             Take the 3-minute diagnostic. It costs nothing, requires no card, and gives you today&apos;s single action.
           </p>
-          <div className="pt-2">
-            <Link href="/survey">
-              <Button variant="primary" size="lg">
-                <span>Start for free</span>
-                <ArrowRight size={18} />
+          <div className="pt-2 flex justify-center">
+            <Link href="/survey" className="inline-block">
+              <Button
+                variant="primary"
+                size="lg"
+                iconRight={ArrowRight}
+                className="min-w-[160px] shadow-md hover:shadow-lg transition-all"
+              >
+                Start here
               </Button>
             </Link>
           </div>

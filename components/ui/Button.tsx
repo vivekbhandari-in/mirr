@@ -29,7 +29,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     // Base styles: 8px radius, accessible focus, font weights, no text wrap
     const baseStyles =
-      "inline-flex items-center justify-center gap-2 rounded-btn select-none transition-colors duration-150 outline-none disabled:opacity-40 disabled:pointer-events-none cursor-pointer whitespace-nowrap";
+      "inline-flex flex-row items-center justify-center gap-2 rounded-btn select-none transition-colors duration-150 outline-none disabled:opacity-40 disabled:pointer-events-none cursor-pointer whitespace-nowrap";
 
     // Variants
     const variantStyles: Record<ButtonVariant, string> = {
@@ -61,7 +61,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {Icon && <Icon size={18} className="flex-shrink-0" />}
-        {children && <span>{children}</span>}
+        {children}
         {IconRight && <IconRight size={18} className="flex-shrink-0" />}
       </button>
     );
