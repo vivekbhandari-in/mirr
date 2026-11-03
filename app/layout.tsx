@@ -41,6 +41,13 @@ export const metadata: Metadata = {
     title: "Mirr — Personal Identity and Consistency System",
     description: "Define who you want to become, protect one meaningful daily action, reflect honestly, and return when you drift.",
   },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/logo.png", type: "image/png" },
+    ],
+    apple: "/logo.png",
+  },
 };
 
 export const viewport: Viewport = {

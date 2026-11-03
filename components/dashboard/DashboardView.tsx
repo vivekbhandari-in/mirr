@@ -24,6 +24,8 @@ import {
 } from "@/lib/identity-defaults";
 import { createClient } from "@/lib/supabase/client";
 
+import { Logo } from "@/components/ui/Logo";
+
 // Shell & Navigation
 import { DashboardTopNav } from "./DashboardTopNav";
 import { DashboardSidebar, IdentityDashboardTab } from "./DashboardSidebar";
@@ -476,9 +478,9 @@ export function DashboardView() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="font-mono text-xs text-primary flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-3 select-none">
+        <Logo size="md" showText={false} className="animate-pulse" />
+        <div className="font-mono text-xs text-foreground-muted flex items-center gap-2">
           <span>Entering sanctuary…</span>
         </div>
       </div>

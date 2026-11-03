@@ -22,6 +22,7 @@ import { DEFAULT_PERSONAL_MIRROR, INITIAL_PROOF_EVENTS } from "@/lib/identity-de
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Modal } from "@/components/ui/Modal";
+import { Logo } from "@/components/ui/Logo";
 import { EditMirrorModal } from "@/components/dashboard/EditMirrorModal";
 
 const TIMEZONES = [
@@ -368,9 +369,8 @@ export function ProfileView() {
     <div className="min-h-screen bg-background text-foreground flex flex-col selection:bg-primary/20 select-text">
       {/* ── TOPBAR NAVIGATION (56px) ── */}
       <header className="h-[56px] w-full bg-background border-b border-border px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 backdrop-blur-md">
-        <Link href="/dashboard" className="flex items-center gap-1.5 group font-semibold text-base sm:text-lg tracking-tight text-foreground">
-          <span>Mirr</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-primary group-hover:scale-125 transition-transform" />
+        <Link href="/dashboard" className="flex items-center" aria-label="Mirr Dashboard">
+          <Logo size="sm" showText />
         </Link>
 
         <Link

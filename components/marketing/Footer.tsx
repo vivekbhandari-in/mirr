@@ -1,14 +1,15 @@
 import Link from "next/link";
+import { Logo } from "@/components/ui/Logo";
 
 export function Footer() {
   return (
     <footer className="px-6 sm:px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border bg-background">
       <Link
         href="/"
-        className="font-semibold text-sm text-foreground-secondary hover:text-foreground transition-colors flex items-center gap-1"
+        className="flex items-center text-foreground-secondary hover:text-foreground transition-colors"
+        aria-label="Mirr Home"
       >
-        <span>Mirr</span>
-        <span className="w-1 h-1 rounded-full bg-primary" />
+        <Logo size="xs" showText textClassName="text-sm font-semibold" />
       </Link>
 
       <span className="text-[12px] text-foreground-muted tracking-tight text-center">

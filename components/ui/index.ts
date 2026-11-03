@@ -7,4 +7,5 @@ export * from "./ProgressRing";
 export * from "./SidebarItem";
 export * from "./EmptyState";
 export * from "./SectionHeading";
+export * from "./Logo";
 

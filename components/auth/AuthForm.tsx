@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, ArrowRight, Check, AlertCircle } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 
 interface AuthFormProps {
   mode: "login" | "signup";
@@ -76,13 +77,8 @@ export function AuthForm({ mode }: AuthFormProps) {
     <div className="w-full max-w-[420px] bg-surface border border-border rounded-modal p-8 sm:p-10 shadow-2xl text-foreground relative">
       {/* Brand Header */}
       <div className="text-center mb-8">
-        <Link href="/" className="inline-flex items-center gap-2 group mb-5">
-          <span className="w-7 h-7 rounded-md bg-surface-elevated border border-border flex items-center justify-center text-primary font-mono text-xs font-semibold group-hover:border-primary/50 transition-colors">
-            M
-          </span>
-          <span className="font-sans text-sm font-semibold tracking-tight text-foreground">
-            Mirr<span className="text-primary">.</span>
-          </span>
+        <Link href="/" className="inline-flex items-center justify-center mb-5" aria-label="Mirr Home">
+          <Logo size="md" showText textClassName="text-lg font-bold" />
         </Link>
         <h1 className="font-sans text-2xl font-bold tracking-tight text-foreground mb-2">
           {mode === "signup" ? "Begin your contract" : "Welcome back"}

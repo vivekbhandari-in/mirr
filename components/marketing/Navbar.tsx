@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowRight, User as UserIcon } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
 import { createClient } from "@/lib/supabase/client";
 
 export function Navbar() {
@@ -66,10 +67,10 @@ export function Navbar() {
       >
         <Link
           href="/"
-          className="flex items-center gap-1.5 group font-semibold text-lg tracking-tight text-foreground py-2"
+          className="flex items-center py-2"
+          aria-label="Mirr Home"
         >
-          <span>Mirr</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-primary group-hover:scale-125 transition-transform" />
+          <Logo size="sm" showText />
         </Link>
 
         {/* Desktop Navigation Links */}

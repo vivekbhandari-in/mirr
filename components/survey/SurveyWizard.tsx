@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSurveyStore, SurveyAnswers } from "@/stores/useSurveyStore";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
 
 interface SurveyStepConfig {
   key: keyof SurveyAnswers;
@@ -105,9 +106,9 @@ export function SurveyWizard() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="font-mono text-xs text-primary flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-3 select-none">
+        <Logo size="md" showText={false} className="animate-pulse" />
+        <div className="font-mono text-xs text-foreground-muted flex items-center gap-2">
           <span>Entering the quiet…</span>
         </div>
       </div>
@@ -195,10 +196,10 @@ export function SurveyWizard() {
       <header className="w-full max-w-[620px] flex items-center justify-between mb-8 select-none">
         <Link
           href="/"
-          className="flex items-center gap-1.5 font-semibold text-lg tracking-tight text-foreground"
+          className="flex items-center"
+          aria-label="Mirr Home"
         >
-          <span>Mirr</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+          <Logo size="sm" showText />
         </Link>
 
         {/* Minimal Progress Indicator */}

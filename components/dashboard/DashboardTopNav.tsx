@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ActionStatus } from "@/types/identity";
 import { Settings, Menu, X } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { Logo } from "@/components/ui/Logo";
 
 interface DashboardTopNavProps {
   focusArea: string;
@@ -41,10 +42,10 @@ export function DashboardTopNav({
 
         <Link
           href="/"
-          className="flex items-center gap-1.5 group font-semibold text-base sm:text-lg tracking-tight text-foreground"
+          className="flex items-center"
+          aria-label="Mirr Home"
         >
-          <span>Mirr</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-primary group-hover:scale-125 transition-transform" />
+          <Logo size="sm" showText />
         </Link>
 
         <div className="h-4 w-[1px] bg-border hidden sm:block" />
