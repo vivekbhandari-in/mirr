@@ -10,7 +10,9 @@ import {
   ChevronLeft,
   ChevronRight,
   LucideIcon,
+  User as UserIcon,
 } from "lucide-react";
+import Link from "next/link";
 import { SidebarItem } from "@/components/ui/SidebarItem";
 import { Badge } from "@/components/ui/Badge";
 
@@ -111,6 +113,15 @@ export function DashboardSidebar({
 
       {/* Bottom info & collapse toggle */}
       <div className="p-3 border-t border-border space-y-2">
+        <Link
+          href="/profile"
+          className="flex items-center gap-2.5 px-3 py-2 rounded-btn text-xs text-foreground-secondary hover:text-foreground hover:bg-surface-elevated transition-colors min-h-[44px]"
+          title="Your Profile"
+        >
+          <UserIcon size={16} className="text-primary shrink-0" />
+          {!isCollapsed && <span className="truncate">Your Profile</span>}
+        </Link>
+
         {!isCollapsed && (
           <div className="px-3 py-2.5 rounded-input bg-surface border border-border text-[11px] text-foreground-secondary">
             <span className="font-mono text-[10px] uppercase text-primary tracking-wider block mb-0.5">

@@ -54,14 +54,22 @@ export function SettingsScreen({
   return (
     <div className="w-full max-w-[760px] mx-auto py-4 sm:py-8 space-y-10 select-none">
       {/* ── HEADER ── */}
-      <div className="border-b border-border pb-4">
-        <span className="text-[11px] font-mono uppercase tracking-widest text-primary block mb-1">
-          Settings &amp; Sovereignty
-        </span>
-        <h1 className="text-xl sm:text-2xl font-semibold text-foreground tracking-tight flex items-center gap-2">
-          <Settings size={22} className="text-primary" />
-          <span>Sanctuary Configuration</span>
-        </h1>
+      <div className="border-b border-border pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span className="text-[11px] font-mono uppercase tracking-widest text-primary block mb-1">
+            Settings &amp; Sovereignty
+          </span>
+          <h1 className="text-xl sm:text-2xl font-semibold text-foreground tracking-tight flex items-center gap-2">
+            <Settings size={22} className="text-primary" />
+            <span>Sanctuary Configuration</span>
+          </h1>
+        </div>
+
+        <Link href="/profile">
+          <Button variant="secondary" size="sm" className="min-h-[44px]">
+            Your Profile &amp; Account →
+          </Button>
+        </Link>
       </div>
 
       {/* ── 1. IDENTITY & CONTRACT CALIBRATION ── */}

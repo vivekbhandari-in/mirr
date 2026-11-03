@@ -9,6 +9,8 @@ interface DashboardTopNavProps {
   focusArea: string;
   proofStatus: ActionStatus;
   userInitial?: string;
+  avatarUrl?: string | null;
+  userEmail?: string | null;
   onOpenSettings: () => void;
   onToggleMobileSidebar: () => void;
   isMobileSidebarOpen: boolean;
@@ -18,6 +20,8 @@ export function DashboardTopNav({
   focusArea,
   proofStatus,
   userInitial = "M",
+  avatarUrl,
+  userEmail,
   onOpenSettings,
   onToggleMobileSidebar,
   isMobileSidebarOpen,
@@ -29,7 +33,7 @@ export function DashboardTopNav({
         <button
           type="button"
           onClick={onToggleMobileSidebar}
-          className="lg:hidden p-1.5 -ml-1 text-foreground-secondary hover:text-foreground hover:bg-surface-elevated rounded-btn transition-colors"
+          className="lg:hidden p-1.5 -ml-1 text-foreground-secondary hover:text-foreground hover:bg-surface-elevated rounded-btn transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
           aria-label={isMobileSidebarOpen ? "Close navigation" : "Open navigation"}
         >
           {isMobileSidebarOpen ? <X size={18} /> : <Menu size={18} />}
@@ -84,24 +88,28 @@ export function DashboardTopNav({
         )}
       </div>
 
-      {/* Right zone: Avatar Squircle + Settings */}
+      {/* Right zone: Avatar Squircle (links to /profile) + Settings */}
       <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={onOpenSettings}
-          className="p-2 text-foreground-secondary hover:text-foreground hover:bg-surface-elevated rounded-btn transition-colors"
-          title="Settings & Data"
-          aria-label="Settings"
+        <Link
+          href="/profile"
+          className="p-2 text-foreground-secondary hover:text-foreground hover:bg-surface-elevated rounded-btn transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+          title="Settings & Profile"
+          aria-label="Settings and Profile"
         >
           <Settings size={18} />
-        </button>
+        </Link>
 
-        <div
-          className="w-7 h-7 rounded-btn bg-surface-elevated border border-border text-foreground text-xs font-mono font-medium flex items-center justify-center select-none shadow-sm"
-          title="Personal Sanctuary"
+        <Link
+          href="/profile"
+          className="w-8 h-8 rounded-card-sm bg-surface-elevated border border-border hover:border-primary text-foreground text-xs font-mono font-medium flex items-center justify-center select-none shadow-sm overflow-hidden transition-colors"
+          title={userEmail ? `Your Profile (${userEmail})` : "Your Profile"}
         >
-          {userInitial}
-        </div>
+          {avatarUrl ? (
+            <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+          ) : (
+            <span className="text-primary font-semibold">{userInitial}</span>
+          )}
+        </Link>
       </div>
     </header>
   );

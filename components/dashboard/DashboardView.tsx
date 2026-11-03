@@ -22,6 +22,7 @@ import {
   synthesizePersonalMirror,
   INITIAL_PROOF_EVENTS,
 } from "@/lib/identity-defaults";
+import { createClient } from "@/lib/supabase/client";
 
 // Shell & Navigation
 import { DashboardTopNav } from "./DashboardTopNav";
@@ -74,6 +75,23 @@ export function DashboardView() {
   const [activeTab, setActiveTab] = useState<IdentityDashboardTab>(initialTab);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  // Load authenticated user if available
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) setUser(user);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   // Modals state
   const [isFocusModalOpen, setIsFocusModalOpen] = useState(false);
@@ -481,7 +499,13 @@ export function DashboardView() {
       <DashboardTopNav
         focusArea={personalMirror.focusArea}
         proofStatus={proofState.status}
-        userInitial={userInitial}
+        userInitial={
+          user?.user_metadata?.full_name?.trim()?.charAt(0)?.toUpperCase() ||
+          user?.email?.trim()?.charAt(0)?.toUpperCase() ||
+          userInitial
+        }
+        avatarUrl={user?.user_metadata?.avatar_url || user?.user_metadata?.picture}
+        userEmail={user?.email}
         onOpenSettings={() => handleSelectTab("settings")}
         onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
         isMobileSidebarOpen={isMobileSidebarOpen}
