@@ -45,7 +45,7 @@ export function DashboardTopNav({
 
         <div className="h-4 w-[1px] bg-border hidden sm:block" />
 
-        <div className="inline-flex items-center gap-1.5 text-xs text-foreground-secondary">
+        <div className="hidden sm:inline-flex items-center gap-1.5 text-xs text-foreground-secondary">
           <span className="text-[11px] uppercase tracking-wider text-foreground-muted font-mono hidden md:inline">
             Focus
           </span>
@@ -53,29 +53,33 @@ export function DashboardTopNav({
         </div>
       </div>
 
-      {/* Center: Daily Status Indicator */}
+      {/* Center: Daily Status Indicator (Responsive compact label on mobile) */}
       <div className="flex items-center gap-2">
         {proofStatus === "pending" && (
           <Badge variant="primary" dot>
-            Today&apos;s proof pending
+            <span className="hidden sm:inline">Today&apos;s proof pending</span>
+            <span className="sm:hidden">Pending proof</span>
           </Badge>
         )}
 
         {proofStatus === "completed" && (
           <Badge variant="success" dot>
-            Proof logged · 1 of 1
+            <span className="hidden sm:inline">Proof logged · 1 of 1</span>
+            <span className="sm:hidden">Proof logged</span>
           </Badge>
         )}
 
         {proofStatus === "minimum" && (
           <Badge variant="recovery" dot>
-            Momentum saved · Minimum
+            <span className="hidden sm:inline">Momentum saved · Minimum</span>
+            <span className="sm:hidden">Minimum version</span>
           </Badge>
         )}
 
         {proofStatus === "missed" && (
           <Badge variant="warning" dot>
-            Drift noted · Recovery ready
+            <span className="hidden sm:inline">Drift noted · Recovery ready</span>
+            <span className="sm:hidden">Drift noted</span>
           </Badge>
         )}
       </div>

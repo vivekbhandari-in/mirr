@@ -26,10 +26,10 @@ export default function PricingPage() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        window.location.href = "/survey";
+        window.location.href = `/signup?tier=${encodeURIComponent(tier)}`;
       }
     } catch {
-      window.location.href = "/survey";
+      window.location.href = `/signup?tier=${encodeURIComponent(tier)}`;
     } finally {
       setLoadingTier(null);
     }
@@ -54,10 +54,11 @@ export default function PricingPage() {
             Build your habits and experience clarity first. Upgrade only if Mirr has earned its place in your day.
           </p>
 
-          {/* Billing Toggle */}
-          <div className="flex items-center justify-center gap-3 pt-4">
+          {/* Billing Toggle (Touch-friendly 44px min-height) */}
+          <div className="flex items-center justify-center gap-3 pt-4 min-h-[44px]">
             <span
-              className={`text-xs transition-colors ${
+              onClick={() => setIsYearly(false)}
+              className={`text-xs cursor-pointer select-none py-2 transition-colors ${
                 !isYearly ? "text-foreground font-medium" : "text-foreground-muted"
               }`}
             >
@@ -66,19 +67,20 @@ export default function PricingPage() {
             <button
               type="button"
               onClick={() => setIsYearly(!isYearly)}
-              className="w-12 h-6 rounded-pill bg-surface-muted border border-border p-0.5 transition-colors relative flex items-center"
+              className="w-14 h-7 rounded-pill bg-surface-muted border border-border p-1 transition-colors relative flex items-center focus:outline-none focus:border-primary"
               aria-label="Toggle annual billing"
             >
               <motion.div
                 layout
                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                className={`w-4 h-4 rounded-pill bg-primary ${
+                className={`w-5 h-5 rounded-pill bg-primary ${
                   isYearly ? "ml-auto" : "mr-auto"
                 }`}
               />
             </button>
             <span
-              className={`text-xs flex items-center gap-1.5 transition-colors ${
+              onClick={() => setIsYearly(true)}
+              className={`text-xs flex items-center gap-1.5 cursor-pointer select-none py-2 transition-colors ${
                 isYearly ? "text-foreground font-medium" : "text-foreground-muted"
               }`}
             >

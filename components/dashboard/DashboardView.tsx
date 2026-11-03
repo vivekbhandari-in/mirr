@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useRef } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -79,6 +80,7 @@ export function DashboardView() {
   const [isMinimumModalOpen, setIsMinimumModalOpen] = useState(false);
   const [isMissedModalOpen, setIsMissedModalOpen] = useState(false);
   const [isEditMirrorOpen, setIsEditMirrorOpen] = useState(false);
+  const [showDemoBanner, setShowDemoBanner] = useState(false);
 
   // Sync tab if URL search parameter changes
   useEffect(() => {
@@ -140,6 +142,8 @@ export function DashboardView() {
               "mirror_personal_mirror",
               JSON.stringify(synthesized)
             );
+          } else {
+            setShowDemoBanner(true);
           }
         }
 
@@ -539,6 +543,34 @@ export function DashboardView() {
           className="flex-1 min-w-0 h-full overflow-y-auto px-4 sm:px-8 lg:px-12 py-6 focus:outline-none"
         >
           <div className="w-full max-w-[960px] mx-auto pb-16">
+            {/* Demo Preview Banner */}
+            {showDemoBanner && (
+              <div className="mb-6 p-3 px-4 rounded-btn bg-surface-elevated border border-border text-xs text-foreground-secondary flex items-center justify-between gap-3 shadow-sm">
+                <div className="flex items-center gap-2 truncate">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                  <span className="truncate">
+                    Viewing preview mirror. Calibrate your own identity contract in the 3-minute diagnostic.
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <Link
+                    href="/survey"
+                    className="text-primary hover:text-primary-hover hover:underline font-mono text-xs font-medium"
+                  >
+                    Start survey →
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setShowDemoBanner(false)}
+                    className="text-foreground-muted hover:text-foreground text-xs p-1"
+                    aria-label="Dismiss banner"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            )}
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}

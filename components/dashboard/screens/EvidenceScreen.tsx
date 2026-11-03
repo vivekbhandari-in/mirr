@@ -131,7 +131,12 @@ export function EvidenceScreen({
                   {item.status === "minimum" && <Minimize2 size={14} />}
                   {item.status === "returned" && <Undo2 size={14} />}
                   {item.status === "missed" && <CircleAlert size={14} />}
-                  {item.status === "today" && <span className="text-[10px] font-mono">Today</span>}
+                  {item.status === "today" && (
+                    <span className="text-[10px] font-mono">
+                      <span className="hidden sm:inline">Today</span>
+                      <span className="sm:hidden text-primary font-bold">●</span>
+                    </span>
+                  )}
                 </div>
               </div>
             ))}

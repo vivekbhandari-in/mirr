@@ -60,6 +60,13 @@ export function ReflectScreen({
     onShowToast("Reflection sealed.");
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+      e.preventDefault();
+      handleSeal();
+    }
+  };
+
   return (
     <div className="w-full max-w-[760px] mx-auto py-4 sm:py-8 space-y-8 select-none">
       {/* ── HEADER ── */}
@@ -116,6 +123,7 @@ export function ReflectScreen({
             value={wentWell}
             onChange={(e) => setWentWell(e.target.value)}
             onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
             placeholder="Protected 25 minutes of deep focus right after morning coffee…"
             className="w-full bg-surface-muted border border-border rounded-input p-3 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-soft disabled:opacity-75 resize-none leading-relaxed transition-all"
           />
@@ -140,6 +148,7 @@ export function ReflectScreen({
             value={blockedBy}
             onChange={(e) => setBlockedBy(e.target.value)}
             onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
             placeholder="Checked Twitter between tasks, lost 40 minutes of momentum…"
             className="w-full bg-surface-muted border border-border rounded-input p-3 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-warning focus:ring-4 focus:ring-warning/20 disabled:opacity-75 resize-none leading-relaxed transition-all"
           />
@@ -164,6 +173,7 @@ export function ReflectScreen({
             value={changeNext}
             onChange={(e) => setChangeNext(e.target.value)}
             onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
             placeholder="Leave phone outside the room during the morning build block…"
             className="w-full bg-surface-muted border border-border rounded-input p-3 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-recovery focus:ring-4 focus:ring-recovery/20 disabled:opacity-75 resize-none leading-relaxed transition-all"
           />
@@ -173,14 +183,19 @@ export function ReflectScreen({
       {/* ── SEAL ACTION ── */}
       <div className="pt-2 flex items-center justify-between">
         {!isSealed ? (
-          <Button
-            variant="primary"
-            size="md"
-            icon={Lock}
-            onClick={handleSeal}
-          >
-            Seal reflection
-          </Button>
+          <div className="flex items-center justify-between w-full">
+            <Button
+              variant="primary"
+              size="md"
+              icon={Lock}
+              onClick={handleSeal}
+            >
+              Seal reflection
+            </Button>
+            <span className="text-[11px] font-mono text-foreground-muted hidden sm:inline">
+              ⌘ + Enter to seal
+            </span>
+          </div>
         ) : (
           <div className="p-4 rounded-input bg-surface border border-border text-xs text-success flex items-center gap-2 w-full">
             <Check size={16} />

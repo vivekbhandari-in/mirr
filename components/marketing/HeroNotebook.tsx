@@ -81,7 +81,7 @@ export function HeroNotebook() {
                   setSelectedKey(tab.id);
                   setIsDone(false);
                 }}
-                className={`px-3 py-1 rounded-btn text-xs font-medium transition-colors ${
+                className={`px-3.5 py-1.5 min-h-[36px] sm:min-h-[32px] rounded-btn text-xs font-medium transition-colors ${
                   isSelected
                     ? "bg-surface-elevated text-foreground border border-border"
                     : "text-foreground-secondary hover:text-foreground"
