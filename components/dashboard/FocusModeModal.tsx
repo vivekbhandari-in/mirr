@@ -153,12 +153,13 @@ export function FocusModeModal({
               </p>
 
               {/* Controls */}
-              <div className="flex items-center gap-3 pt-3">
+              <div className="flex items-center justify-center flex-wrap sm:flex-nowrap gap-3 pt-3 w-full max-w-[380px] mx-auto">
                 <Button
                   variant="secondary"
                   size="md"
                   icon={isRunning ? Pause : Play}
                   onClick={() => setIsRunning(!isRunning)}
+                  className="px-5 min-w-[120px]"
                 >
                   {isRunning ? "Pause" : "Resume"}
                 </Button>
@@ -167,8 +168,9 @@ export function FocusModeModal({
                   variant="primary"
                   size="md"
                   onClick={handleFinishEarly}
+                  className="px-5 min-w-[150px]"
                 >
-                  End &amp; Log Proof
+                  End &amp; log proof
                 </Button>
               </div>
             </motion.div>

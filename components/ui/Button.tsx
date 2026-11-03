@@ -27,9 +27,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    // Base styles: 8px radius, accessible focus, font weights
+    // Base styles: 8px radius, accessible focus, font weights, no text wrap
     const baseStyles =
-      "inline-flex items-center justify-center gap-2 rounded-btn select-none transition-colors duration-150 outline-none disabled:opacity-40 disabled:pointer-events-none cursor-pointer";
+      "inline-flex items-center justify-center gap-2 rounded-btn select-none transition-colors duration-150 outline-none disabled:opacity-40 disabled:pointer-events-none cursor-pointer whitespace-nowrap";
 
     // Variants
     const variantStyles: Record<ButtonVariant, string> = {
@@ -49,21 +49,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const sizeStyles: Record<ButtonSize, string> = {
       sm: "h-8 px-3 text-xs",
       md: "h-10 px-4 text-[13px]",
-      lg: "h-12 px-5 text-sm",
+      lg: "h-12 px-6 text-sm",
     };
-
-    // For primary and recovery variants with standard sizes, default height to 48px if size='md' or 'lg'
-    const heightClass =
-      (variant === "primary" || variant === "recovery") && size === "md"
-        ? "h-12"
-        : sizeStyles[size];
 
     return (
       <button
         ref={ref}
         type={type}
         disabled={disabled}
-        className={`${baseStyles} ${variantStyles[variant]} ${heightClass} ${className}`}
+        className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
         {...props}
       >
         {Icon && <Icon size={18} className="flex-shrink-0" />}
