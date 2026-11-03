@@ -2,97 +2,173 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Timer, Check, Minimize2, Sparkles, Undo2 } from "lucide-react";
+import { ProgressRing } from "@/components/ui/ProgressRing";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 
-const CHIP_EXAMPLES: Record<string, string> = {
-  Career: "I want to be building my own product, not just executing…",
-  Discipline: "I want to stop negotiating with myself every single morning…",
-  Confidence: "I want to trust my own voice in rooms that matter…",
-  Routine: "I want mornings where I don't touch my phone for the first hour…",
+const IDENTITIES = [
+  { id: "career", label: "Developer" },
+  { id: "writing", label: "Writer" },
+  { id: "focus", label: "Indie Hacker" },
+] as const;
+
+type IdentityKey = typeof IDENTITIES[number]["id"];
+
+const PREVIEWS: Record<
+  IdentityKey,
+  {
+    identity: string;
+    action: string;
+    description: string;
+    enemy: string;
+    anchor: string;
+    min: string;
+    duration: number;
+  }
+> = {
+  career: {
+    identity: "A disciplined developer who ships consistently",
+    action: "Build for 25 focused minutes",
+    description: "Open your current project and make one visible improvement.",
+    enemy: "Evening distraction",
+    anchor: "After morning coffee",
+    min: "Write one function",
+    duration: 25,
+  },
+  writing: {
+    identity: "A thoughtful creator who writes daily without self-editing",
+    action: "Write 300 unfiltered words",
+    description: "Draft your central argument before touching email or feeds.",
+    enemy: "Premature perfectionism",
+    anchor: "Before checking messages",
+    min: "Draft one paragraph",
+    duration: 20,
+  },
+  focus: {
+    identity: "An indie founder building long-term leverage",
+    action: "Ship one user-facing improvement",
+    description: "Release one small fix or feature to production today.",
+    enemy: "Busywork & refactoring",
+    anchor: "First hour of the day",
+    min: "Deploy one copy fix",
+    duration: 30,
+  },
 };
 
 export function HeroNotebook() {
-  const [activeChip, setActiveChip] = useState("Career");
+  const [selectedKey, setSelectedKey] = useState<IdentityKey>("career");
+  const [isDone, setIsDone] = useState(false);
+
+  const cur = PREVIEWS[selectedKey];
+
+  const handleToggle = () => {
+    setIsDone(!isDone);
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -3 }}
-      className="w-full max-w-[400px] bg-ink3 border border-rule2 rounded-[4px] overflow-hidden shadow-2xl transition-shadow duration-300"
-    >
-      <div className="bg-ink2 px-3.5 py-2.5 border-b border-rule flex items-center gap-1.5">
-        <div className="w-[9px] h-[9px] rounded-full bg-[#E87C7C]" />
-        <div className="w-[9px] h-[9px] rounded-full bg-[#E8C47C]" />
-        <div className="w-[9px] h-[9px] rounded-full bg-[#7CE87C]" />
-        <span className="text-[11px] text-faint ml-2 tracking-[0.04em]">mirr.app/survey</span>
-      </div>
-
-      <div className="p-6">
-        <p className="text-[10px] tracking-[0.1em] text-gold mb-2.5 font-normal">
-          Step 2 of 6 — Your goal
-        </p>
-        <p className="font-serif text-[18px] italic text-paper leading-[1.35] mb-4">
-          &ldquo;What do you want your life to look like in 1–2 years?&rdquo;
-        </p>
-
-        <div className="flex flex-wrap gap-1.5 mb-3.5">
-          {Object.keys(CHIP_EXAMPLES).map((chip) => {
-            const isSelected = activeChip === chip;
+    <div className="w-full max-w-[480px] bg-surface border border-border rounded-card shadow-card p-6 sm:p-7 space-y-6 select-none transition-all">
+      {/* Top Segment Switcher */}
+      <div className="flex items-center justify-between border-b border-border pb-4">
+        <div className="flex items-center gap-1.5">
+          {IDENTITIES.map((tab) => {
+            const isSelected = selectedKey === tab.id;
             return (
               <button
-                key={chip}
+                key={tab.id}
                 type="button"
-                onClick={() => setActiveChip(chip)}
-                className={`relative text-[11px] font-light px-2.5 py-1 rounded-sm tracking-[0.02em] transition-colors duration-200 ${
-                  isSelected ? "text-gold font-normal" : "text-faint hover:text-paper"
+                onClick={() => {
+                  setSelectedKey(tab.id);
+                  setIsDone(false);
+                }}
+                className={`px-3 py-1 rounded-btn text-xs font-medium transition-colors ${
+                  isSelected
+                    ? "bg-surface-elevated text-foreground border border-border"
+                    : "text-foreground-secondary hover:text-foreground"
                 }`}
               >
-                {/* Smooth Morphing Pill */}
-                {isSelected ? (
-                  <motion.span
-                    layoutId="heroChipActive"
-                    className="absolute inset-0 rounded-sm border border-gold bg-gold/10 -z-0"
-                    transition={{ type: "spring", stiffness: 450, damping: 30 }}
-                  />
-                ) : (
-                  <span className="absolute inset-0 rounded-sm border border-rule2 -z-0" />
-                )}
-                <span className="relative z-10">{chip}</span>
+                {tab.label}
               </button>
             );
           })}
         </div>
 
-        {/* Animated preview text */}
-        <div className="bg-ink2 border-b border-rule py-2.5 px-0 font-serif italic text-[13px] text-paper/70 w-full mb-3.5 tracking-[0.01em] min-h-[42px] flex items-center overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={activeChip}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="line-clamp-2"
-            >
-              &ldquo;{CHIP_EXAMPLES[activeChip]}&rdquo;
-            </motion.p>
-          </AnimatePresence>
+        <Badge variant={isDone ? "success" : "primary"} dot>
+          {isDone ? "Proof logged" : "Pending proof"}
+        </Badge>
+      </div>
+
+      {/* Identity Declaration */}
+      <div className="space-y-1">
+        <span className="text-[11px] font-editorial italic text-primary block">
+          You are becoming:
+        </span>
+        <h3 className="text-base sm:text-lg font-medium text-foreground tracking-tight leading-snug">
+          {cur.identity}
+        </h3>
+      </div>
+
+      {/* Main Proof Card Preview */}
+      <div className="p-4 sm:p-5 rounded-card-sm bg-surface-muted border border-border space-y-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-1">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-foreground-muted block">
+              Today&apos;s Proof · {cur.duration}m
+            </span>
+            <p className="text-base font-semibold text-foreground tracking-tight">
+              {cur.action}
+            </p>
+            <p className="text-xs text-foreground-secondary leading-relaxed">
+              {cur.description}
+            </p>
+          </div>
+
+          <ProgressRing
+            progress={isDone ? 100 : 0}
+            isCompleted={isDone}
+            size={56}
+            strokeWidth={3}
+          >
+            {isDone ? (
+              <Check size={18} className="text-success" />
+            ) : (
+              <span className="font-mono text-[10px] text-primary">0/1</span>
+            )}
+          </ProgressRing>
         </div>
 
-        <div className="h-[2px] bg-rule mt-1.5 overflow-hidden">
-          <motion.div
-            className="h-full w-1/3 bg-gold"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{ transformOrigin: "left" }}
-          />
+        {/* 3 Pillars */}
+        <div className="grid grid-cols-3 gap-2 pt-2 border-t border-border text-[11px]">
+          <div>
+            <span className="text-[10px] font-mono uppercase text-warning block">Enemy</span>
+            <span className="text-foreground truncate block">{cur.enemy}</span>
+          </div>
+          <div>
+            <span className="text-[10px] font-mono uppercase text-primary block">Anchor</span>
+            <span className="text-foreground truncate block">{cur.anchor}</span>
+          </div>
+          <div>
+            <span className="text-[10px] font-mono uppercase text-recovery block">Min</span>
+            <span className="text-foreground truncate block">{cur.min}</span>
+          </div>
         </div>
-        <p className="text-[10px] text-faint mt-1.5 text-right tracking-[0.04em]">
-          2 of 6 answered
-        </p>
       </div>
-    </motion.div>
+
+      {/* Action Simulation Button */}
+      <div className="flex items-center justify-between pt-1">
+        <p className="text-[12px] text-foreground-muted">
+          {isDone ? "Momentum saved for today." : "Try clicking the daily proof:"}
+        </p>
+
+        <Button
+          variant={isDone ? "secondary" : "primary"}
+          size="sm"
+          icon={isDone ? Undo2 : Check}
+          onClick={handleToggle}
+        >
+          {isDone ? "Reset proof" : "Log proof"}
+        </Button>
+      </div>
+    </div>
   );
 }

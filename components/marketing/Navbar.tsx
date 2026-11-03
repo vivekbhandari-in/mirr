@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
+import { Button } from "@/components/ui/Button";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,54 +24,54 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 h-[52px] flex items-center justify-between px-6 sm:px-8 transition-colors duration-200 border-b border-rule backdrop-blur-md ${
-        scrolled ? "bg-ink/95" : "bg-ink/90"
+      className={`fixed top-0 left-0 right-0 z-50 h-[56px] flex items-center justify-between px-6 sm:px-8 transition-colors duration-150 border-b border-border backdrop-blur-md ${
+        scrolled ? "bg-background/95" : "bg-background/85"
       }`}
     >
       <Link
         href="/"
-        className="font-serif text-[19px] text-paper tracking-[-0.01em] hover:text-white transition-colors"
+        className="flex items-center gap-1.5 group font-semibold text-lg tracking-tight text-foreground"
       >
-        Mirr<em className="text-gold not-italic">.</em>
+        <span>Mirr</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-primary group-hover:scale-125 transition-transform" />
       </Link>
 
       <div className="flex items-center gap-5 sm:gap-6">
         <Link
           href="/#how-it-works"
-          className="text-xs font-light text-faint tracking-[0.04em] hover:text-paper transition-colors py-1 hidden sm:inline-block"
+          className="text-[13px] font-normal text-foreground-secondary hover:text-foreground transition-colors py-1 hidden sm:inline-block"
         >
           How it works
         </Link>
         <Link
           href="/wall"
-          className="text-xs font-light text-faint tracking-[0.04em] hover:text-paper transition-colors py-1 hidden sm:inline-block"
+          className="text-[13px] font-normal text-foreground-secondary hover:text-foreground transition-colors py-1 hidden sm:inline-block"
         >
-          Wall of change
+          Wall of honesty
         </Link>
         <Link
           href="/pricing"
-          className="text-xs font-light text-faint tracking-[0.04em] hover:text-paper transition-colors py-1"
+          className="text-[13px] font-normal text-foreground-secondary hover:text-foreground transition-colors py-1"
         >
           Pricing
         </Link>
         <Link
           href="/login"
-          className="text-xs font-light text-faint tracking-[0.04em] hover:text-paper transition-colors py-1"
+          className="text-[13px] font-normal text-foreground-secondary hover:text-foreground transition-colors py-1"
         >
           Sign in
         </Link>
-        <Link
-          href="/survey"
-          className="text-xs font-medium text-ink bg-gold hover:bg-gold2 px-4 py-[7px] rounded-sm transition-all duration-200 tracking-[0.03em] shadow-sm active:scale-[0.98]"
-        >
-          Start for free
+        <Link href="/survey">
+          <Button variant="primary" size="sm">
+            Start for free
+          </Button>
         </Link>
       </div>
 
-      {/* Minimalist 1.5px gold scroll progress indicator */}
+      {/* Minimalist 1.5px indigo scroll progress indicator */}
       <motion.div
         style={{ scaleX, transformOrigin: "left" }}
-        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#C9A96E] pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-primary pointer-events-none"
         aria-hidden="true"
       />
     </nav>

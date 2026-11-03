@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { Navbar } from "@/components/marketing/Navbar";
 import { Footer } from "@/components/marketing/Footer";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { ArrowRight } from "lucide-react";
 
 interface WallItem {
   id: string;
@@ -14,15 +18,15 @@ interface WallItem {
 const FEATURED_WALL_ITEMS: WallItem[] = [
   {
     id: "w1",
-    area: "Career & focus",
+    area: "Career",
     problem: "Circling the same agency role for two years, executing other people's ideas.",
-    goal: "Ship my first micro-SaaS and replace 50% of my monthly burn with product revenue.",
+    goal: "Ship my first micro-SaaS and replace 50% of monthly burn with product revenue.",
     habitsCount: 3,
     timeAgo: "2 hours ago",
   },
   {
     id: "w2",
-    area: "Discipline & routine",
+    area: "Discipline",
     problem: "Waking up and immediately doom-scrolling for 45 minutes in bed.",
     goal: "Win the first hour of every morning with zero screen time and clear intention.",
     habitsCount: 2,
@@ -30,7 +34,7 @@ const FEATURED_WALL_ITEMS: WallItem[] = [
   },
   {
     id: "w3",
-    area: "Confidence & bravery",
+    area: "Focus",
     problem: "Keeping quiet in executive meetings even when I know the answer.",
     goal: "Speak up with authority and take calculated professional risks without apologizing.",
     habitsCount: 3,
@@ -38,7 +42,7 @@ const FEATURED_WALL_ITEMS: WallItem[] = [
   },
   {
     id: "w4",
-    area: "Health & vitality",
+    area: "Health",
     problem: "Sitting 11 hours straight without moving and collapsing into bed fatigued.",
     goal: "A sustainable physical rhythm: daily outdoor walks and consistent sleep window.",
     habitsCount: 2,
@@ -63,97 +67,84 @@ const FEATURED_WALL_ITEMS: WallItem[] = [
 ];
 
 export const metadata = {
-  title: "Wall of Change — Mirr",
+  title: "Wall of Honesty — Mirr",
   description: "What people are working on right now. Anonymized, honest glimpses into personal growth.",
 };
 
-export default function WallOfChangePage() {
+export default function WallOfHonestyPage() {
   return (
-    <div className="min-h-screen bg-ink text-paper flex flex-col selection:bg-gold/20 selection:text-paper">
+    <div className="min-h-screen bg-background text-foreground flex flex-col selection:bg-primary/20 selection:text-foreground">
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20 px-6 sm:px-8 max-w-[1100px] mx-auto w-full">
+      <main className="flex-1 pt-24 pb-20 px-6 sm:px-8 max-w-[1120px] mx-auto w-full">
         {/* Header */}
-        <div className="text-center max-w-[600px] mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 text-[10px] font-medium tracking-[0.1em] text-gold uppercase bg-gold/10 px-3 py-1 rounded-sm mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse-subtle" />
-            Live reflections
-          </div>
+        <div className="text-center max-w-[620px] mx-auto mb-14 space-y-3">
+          <Badge variant="primary" dot>
+            Live anonymous commitments
+          </Badge>
 
-          <h1 className="font-serif text-[clamp(36px,4.5vw,56px)] text-paper leading-[1.08] tracking-[-0.02em] mb-4">
-            The Wall of <span className="italic text-gold">Change.</span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground tracking-tight">
+            The Wall of Honesty.
           </h1>
 
-          <p className="text-sm font-light text-muted leading-relaxed">
-            What real people are working on right now. Anonymized, honest reflections from members building clarity and better habits on Mirr.
+          <p className="text-sm sm:text-base text-foreground-secondary leading-relaxed">
+            What real people are working on right now. Anonymized, honest reflections from members building clarity and self-respect on Mirr.
           </p>
         </div>
 
-        {/* Bento / Grid of cards */}
+        {/* Grid of cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {FEATURED_WALL_ITEMS.map((item) => (
-            <div
-              key={item.id}
-              className="bg-ink2 border border-rule rounded-md p-6 flex flex-col justify-between hover:border-gold/50 transition-colors shadow-sm"
-            >
-              <div>
-                <div className="flex items-center justify-between text-[10px] text-faint mb-4">
-                  <span className="text-gold uppercase tracking-[0.08em] font-medium">
-                    {item.area}
+            <Card key={item.id} padding="md" className="flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Badge variant="neutral">{item.area}</Badge>
+                  <span className="font-mono text-[11px] text-foreground-muted">{item.timeAgo}</span>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-[10px] font-mono uppercase text-foreground-muted block">
+                    Current Struggle
                   </span>
-                  <span>{item.timeAgo}</span>
+                  <p className="text-xs text-foreground-secondary italic leading-relaxed">
+                    “{item.problem}”
+                  </p>
                 </div>
 
-                <div className="space-y-4 mb-6">
-                  <div>
-                    <p className="text-[10px] uppercase font-light text-muted tracking-wider mb-1">
-                      Current Reality
-                    </p>
-                    <p className="font-serif italic text-sm text-paper/80 leading-relaxed">
-                      &ldquo;{item.problem}&rdquo;
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-[10px] uppercase font-light text-muted tracking-wider mb-1">
-                      Target Future
-                    </p>
-                    <p className="font-serif italic text-sm text-paper/90 leading-relaxed">
-                      &ldquo;{item.goal}&rdquo;
-                    </p>
-                  </div>
+                <div className="space-y-1 pt-2 border-t border-border">
+                  <span className="text-[10px] font-mono uppercase text-primary block">
+                    Becoming
+                  </span>
+                  <p className="text-xs font-medium text-foreground leading-relaxed">
+                    {item.goal}
+                  </p>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-rule flex items-center justify-between">
-                <span className="text-[11px] text-faint">
-                  {item.habitsCount} habits calibrated
-                </span>
-                <Link
-                  href="/survey"
-                  className="text-xs text-gold hover:underline font-medium"
-                >
-                  Build yours →
-                </Link>
+              <div className="pt-2 border-t border-border flex items-center justify-between text-[11px] text-foreground-muted font-mono">
+                <span>{item.habitsCount} atomic habits</span>
+                <span className="text-primary font-medium">Committed</span>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
 
-        {/* Bottom Call to Action */}
-        <div className="text-center py-10 border-t border-rule">
-          <h2 className="font-serif text-2xl text-paper mb-2">
-            Ready to name your own obstacle?
+        {/* Bottom CTA */}
+        <div className="p-8 sm:p-12 rounded-card bg-surface border border-border text-center max-w-[640px] mx-auto space-y-4 shadow-card">
+          <h2 className="text-xl sm:text-2xl font-semibold text-foreground tracking-tight">
+            Ready to name your blocker?
           </h2>
-          <p className="text-xs font-light text-muted mb-6">
-            Two minutes. Completely private. 30 days full access.
+          <p className="text-xs sm:text-sm text-foreground-secondary leading-relaxed max-w-[460px] mx-auto">
+            Take the 3-minute diagnostic. It costs nothing, requires no card, and gives you today&apos;s single action.
           </p>
-          <Link
-            href="/survey"
-            className="inline-block text-xs font-medium text-ink bg-gold hover:bg-gold2 px-7 py-3 rounded-sm transition-all"
-          >
-            Start for free — no card needed
-          </Link>
+          <div className="pt-2">
+            <Link href="/survey">
+              <Button variant="primary" size="lg">
+                <span>Start for free</span>
+                <ArrowRight size={18} />
+              </Button>
+            </Link>
+          </div>
         </div>
       </main>
 
@@ -161,4 +152,3 @@ export default function WallOfChangePage() {
     </div>
   );
 }
-

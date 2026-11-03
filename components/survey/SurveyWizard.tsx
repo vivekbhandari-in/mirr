@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSurveyStore, SurveyAnswers } from "@/stores/useSurveyStore";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 interface SurveyStepConfig {
   key: keyof SurveyAnswers;
@@ -103,9 +105,10 @@ export function SurveyWizard() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-ink flex items-center justify-center p-4">
-        <div className="font-serif italic text-gold text-base animate-pulse-subtle">
-          Entering the quiet…
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="font-mono text-xs text-primary flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <span>Entering the quiet…</span>
         </div>
       </div>
     );
@@ -177,93 +180,60 @@ export function SurveyWizard() {
     }
   };
 
-  const progressPercent = Math.round(((step + 1) / SURVEY_STEPS.length) * 100);
-
   return (
-    <div className="min-h-screen bg-[#110F0D] text-paper flex flex-col items-center justify-between px-4 py-8 sm:py-14 selection:bg-gold/25 selection:text-paper relative overflow-hidden">
-      {/* ── THE ENLIGHTENMENT DOORWAY (BACKGROUND LIGHT SHAFT) ── */}
-      <div 
-        className="doorway-light-shaft absolute inset-x-0 top-0 h-[640px] pointer-events-none z-0 animate-doorway-breathe"
-        aria-hidden="true"
-      />
-
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-between px-4 py-8 sm:py-12 selection:bg-primary/20 select-none">
       {/* Toast Notification */}
       <div
-        className={`fixed bottom-6 right-6 z-50 bg-ink3 text-paper text-xs font-light px-5 py-3 rounded-sm border-l-2 border-gold shadow-2xl transition-all duration-300 pointer-events-none ${
+        className={`fixed bottom-6 right-6 z-50 bg-surface text-foreground text-xs font-mono px-4 py-2.5 rounded-btn border-l-2 border-primary border-y border-r border-border shadow-modal transition-all duration-150 pointer-events-none ${
           toastMsg ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         }`}
       >
         {toastMsg}
       </div>
 
-      {/* ── MINIMAL TOPBAR WITH STEP COUNTER ── */}
-      <header className="w-full max-w-[620px] relative z-10 flex flex-col items-center mb-6">
+      {/* Top Header */}
+      <header className="w-full max-w-[620px] flex items-center justify-between mb-8 select-none">
         <Link
           href="/"
-          className="font-serif text-[20px] text-paper tracking-[-0.01em] hover:text-white transition-colors mb-5 group inline-flex items-center gap-1"
+          className="flex items-center gap-1.5 font-semibold text-lg tracking-tight text-foreground"
         >
           <span>Mirr</span>
-          <span className="text-gold italic font-serif">.</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
         </Link>
 
-        {/* Streamlined Progress Bar */}
-        <div className="w-full">
-          <div className="flex justify-between items-center text-[11px] text-faint mb-2 px-0.5">
-            <span className="font-mono text-gold/90 font-medium">
-              0{step + 1} <span className="text-faint/60">/ 06</span>
-            </span>
-            <span className="tracking-wider uppercase text-[10px] text-faint">
-              {curConfig.area}
-            </span>
-          </div>
-
-          <div className="w-full bg-ink3/70 h-[1.5px] overflow-hidden relative">
-            <motion.div
-              className="h-full bg-gradient-to-r from-gold2 to-gold"
-              initial={{ width: "0%" }}
-              animate={{ width: `${progressPercent}%` }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            />
-          </div>
-        </div>
+        {/* Minimal Progress Indicator */}
+        <span className="font-mono text-xs text-foreground-secondary">
+          Question {step + 1} of {SURVEY_STEPS.length}
+        </span>
       </header>
 
-      {/* ── THE SANCTUARY CARD ── */}
-      <main className="w-full max-w-[620px] relative z-10 my-auto">
+      {/* Main Conversation Container */}
+      <main className="w-full max-w-[620px] my-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="bg-[#181512]/95 border border-rule2/75 rounded-[4px] p-7 sm:p-10 sanctuary-card-glow relative overflow-hidden backdrop-blur-xl"
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="bg-surface border border-border rounded-card p-6 sm:p-10 shadow-card space-y-6"
           >
-            {/* Top gold highlight line */}
-            <div 
-              className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-gold/60 to-transparent" 
-              aria-hidden="true" 
-            />
-
-            {/* Simple Step Eyebrow */}
-            <div className="inline-flex items-center gap-2 text-[10px] font-medium tracking-[0.14em] text-gold uppercase mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-              <span>Step {step + 1} of 6 — {curConfig.area}</span>
+            {/* Step Question */}
+            <div className="space-y-2">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-primary block">
+                {curConfig.area}
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground leading-snug">
+                {curConfig.question}
+              </h1>
+              <p className="text-xs sm:text-[13px] text-foreground-secondary leading-relaxed">
+                {curConfig.hint}
+              </p>
             </div>
 
-            {/* Primary Reflective Question */}
-            <h1 className="font-serif text-[26px] sm:text-[30px] text-paper leading-[1.25] tracking-[-0.015em] mb-2 font-normal">
-              {curConfig.question}
-            </h1>
-
-            {/* Compassionate Hint */}
-            <p className="text-xs sm:text-[13px] font-light italic text-gold/80 leading-relaxed mb-6">
-              {curConfig.hint}
-            </p>
-
-            {/* Interactive Chips (when applicable) */}
+            {/* Interactive Chips (if present) */}
             {curConfig.chips && (
-              <div className="flex flex-wrap gap-2 mb-6">
+              <div className="flex flex-wrap gap-2 pt-1">
                 {curConfig.chips.map((chip) => {
                   const isSelected = currentText === chip;
                   return (
@@ -271,10 +241,10 @@ export function SurveyWizard() {
                       key={chip}
                       type="button"
                       onClick={() => handleChipClick(chip)}
-                      className={`text-xs px-3.5 py-1.5 rounded-sm border transition-all duration-200 tracking-[0.02em] select-none ${
+                      className={`text-xs px-3.5 py-1.5 rounded-btn border transition-colors ${
                         isSelected
-                          ? "border-gold text-paper bg-gold/15 shadow-[0_0_12px_rgba(201,169,110,0.2)] font-medium"
-                          : "border-rule2 text-faint hover:border-gold/60 hover:text-paper bg-ink2/60"
+                          ? "bg-primary-soft border-primary text-foreground font-medium"
+                          : "bg-surface-muted border-border text-foreground-secondary hover:text-foreground hover:bg-surface-elevated"
                       }`}
                     >
                       {chip}
@@ -284,82 +254,59 @@ export function SurveyWizard() {
               </div>
             )}
 
-            {/* Elevated Editorial Journal Input */}
-            <div className="relative mb-6 group">
-              <div className="w-full bg-[#141210]/90 hover:bg-[#141210] border border-rule2/80 focus-within:border-gold/80 focus-within:shadow-[0_0_30px_-5px_rgba(201,169,110,0.18)] rounded-[4px] p-5 sm:p-6 transition-all duration-300 relative shadow-inner">
-                {/* Subtle opening quotation accent */}
-                <span className="font-serif italic text-2xl text-gold/30 absolute left-4 sm:left-5 top-3.5 select-none pointer-events-none">
-                  “
-                </span>
-
-                <textarea
-                  value={currentText}
-                  onChange={handleTextChange}
-                  placeholder={curConfig.placeholder}
-                  rows={4}
-                  className="w-full bg-transparent border-none pl-6 sm:pl-7 pr-2 py-0 font-serif text-[18px] sm:text-[20px] text-paper placeholder:text-muted/35 placeholder:font-serif placeholder:italic placeholder:text-[17px] sm:placeholder:text-[19px] outline-none resize-none leading-[1.85] tracking-[-0.01em] caret-gold selection:bg-gold/30 selection:text-white block min-h-[130px]"
-                />
-
-                {/* Subtle closing quotation accent */}
-                {currentText.length > 0 && (
-                  <span className="font-serif italic text-2xl text-gold/30 inline-block ml-1 select-none pointer-events-none">
-                    ”
-                  </span>
-                )}
-              </div>
-
-              {/* Adaptive Contemplative Microcopy */}
-              <div className="flex justify-between items-center mt-2.5 px-1 text-[11px] text-faint font-light">
-                <span className="transition-colors duration-300">
-                  {currentText.length === 0
-                    ? "Take a breath. Write what is true, not what sounds impressive."
-                    : currentText.length < 40
-                    ? "Keep going. Let the unfiltered thought out…"
-                    : "Honest reflection captured."}
-                </span>
-                <span className="font-mono text-[10px] text-faint/70">
-                  {currentText.length} chars
-                </span>
-              </div>
+            {/* Generous Text Input */}
+            <div className="pt-2">
+              <textarea
+                rows={4}
+                value={currentText}
+                onChange={handleTextChange}
+                placeholder={curConfig.placeholder}
+                className="w-full bg-surface-muted text-foreground border border-border rounded-input p-3.5 text-sm placeholder:text-foreground-muted outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary-soft resize-none leading-relaxed"
+                autoFocus
+              />
             </div>
 
-            {/* Controls */}
-            <div className="flex justify-between items-center pt-2">
-              {step > 0 ? (
-                <button
-                  type="button"
-                  onClick={handleBack}
-                  className="text-xs font-light text-faint hover:text-paper tracking-[0.04em] transition-colors py-2 px-1"
-                >
-                  ← Back
-                </button>
-              ) : (
-                <span />
-              )}
+            {/* Reassuring Helper Text & Actions */}
+            <div className="flex items-center justify-between pt-2 border-t border-border">
+              <p className="text-[11px] text-foreground-muted font-light italic">
+                “There are no wrong answers.”
+              </p>
 
-              <button
-                type="button"
-                onClick={handleNext}
-                disabled={submitting}
-                className="text-xs sm:text-[13px] font-medium text-ink bg-gold hover:bg-gold2 px-7 py-2.5 sm:py-3 rounded-sm tracking-[0.03em] transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-md disabled:opacity-50"
-              >
-                {submitting ? (
-                  "Synthesizing your mirror…"
-                ) : step === SURVEY_STEPS.length - 1 ? (
-                  "See my mirror"
-                ) : (
-                  "Continue"
+              <div className="flex items-center gap-3">
+                {step > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="md"
+                    icon={ArrowLeft}
+                    onClick={handleBack}
+                  >
+                    Back
+                  </Button>
                 )}
-              </button>
+
+                <Button
+                  variant="primary"
+                  size="md"
+                  disabled={submitting}
+                  iconRight={ArrowRight}
+                  onClick={handleNext}
+                >
+                  {submitting
+                    ? "Synthesizing…"
+                    : step === SURVEY_STEPS.length - 1
+                    ? "Generate Personal Mirror"
+                    : "Continue"}
+                </Button>
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* ── FOOTER PRIVACY NOTE ── */}
-      <footer className="w-full max-w-[620px] relative z-10 text-center mt-6">
-        <p className="text-[11px] font-light text-faint tracking-wide leading-relaxed">
-          Your answers are private. Mirr never shares or sells your personal reflections.
+      {/* Minimal Footer */}
+      <footer className="w-full max-w-[620px] text-center pt-8">
+        <p className="text-[11px] text-foreground-muted font-mono">
+          Private session · Your responses are never shared
         </p>
       </footer>
     </div>

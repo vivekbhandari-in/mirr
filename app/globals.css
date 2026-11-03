@@ -3,38 +3,83 @@
 @tailwind utilities;
 
 :root {
-  /* Mirr Sanctuary Design System Tokens */
-  --bg: #141210;
-  --bg1: #1C1914;
-  --bg2: #242018;
-  --bg3: #2E2A20;
-  --gold: #C9A96E;
-  --gold2: #A8864E;
-  --text: #F0EAE0;
-  --sub: #8A8070;
-  --faint: #4A4438;
-  --line: rgba(201, 169, 110, 0.14);
+  /* ── MIDNIGHT MIRROR DESIGN SYSTEM TOKENS ── */
+  --background: #0A0C10;
+  --surface: #11141A;
+  --surface-elevated: #161A22;
+  --surface-muted: #1B202A;
+  --border: #232833;
+  --border-strong: #2E3542;
 
-  /* Legacy fallback aliases */
-  --ink: #141210;
-  --ink2: #1C1914;
-  --ink3: #242018;
-  --paper: #F0EAE0;
-  --muted: #8A8070;
-  --serif: var(--font-dm-serif), 'DM Serif Display', Georgia, serif;
-  --sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --foreground: #E7E9EE;
+  --foreground-secondary: #98A2B3;
+  --foreground-muted: #6B7280;
+  --foreground-inverse: #0A0C10;
+
+  --primary: #7C8CFF;
+  --primary-hover: #8F9DFF;
+  --primary-soft: rgba(124, 140, 255, 0.12);
+
+  --success: #4ADE80;
+  --recovery: #2DD4BF;
+  --warning: #F59E0B;
+  --danger: #F87171;
+
+  /* Spacing Scale (4px base, 8px rhythm) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radii */
+  --radius-btn: 8px;
+  --radius-input: 8px;
+  --radius-card-sm: 10px;
+  --radius-card: 12px;
+  --radius-modal: 16px;
+  --radius-pill: 999px;
+
+  /* Legacy & compatibility aliases */
+  --bg: #0A0C10;
+  --bg1: #11141A;
+  --bg2: #161A22;
+  --bg3: #1B202A;
+  --text: #E7E9EE;
+  --sub: #98A2B3;
+  --faint: #6B7280;
+  --line: #232833;
+  --charcoal: #0A0C10;
+  --accent-indigo: #7C8CFF;
+  --gold: #7C8CFF;
+  --gold2: #8F9DFF;
+  --ink: #0A0C10;
+  --ink2: #11141A;
+  --ink3: #161A22;
+  --paper: #E7E9EE;
+  --muted: #98A2B3;
+  --rule: #232833;
+  --rule2: #2E3542;
+  --serif: var(--font-newsreader, var(--font-dm-serif, Georgia, serif));
+  --sans: var(--font-sans, var(--font-inter, system-ui, sans-serif));
 }
 
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  background-color: var(--bg);
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 body {
   font-family: var(--sans);
-  background: var(--bg);
-  color: var(--text);
+  background: var(--background);
+  color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
 }
@@ -48,10 +93,10 @@ a {
   text-decoration: none;
 }
 
-/* ── SLEEK DARK SANCTUARY SCROLLBAR (Eliminates white/light native browser lines) ── */
+/* ── HAIRLINE MIDNIGHT SCROLLBAR ── */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(201, 169, 110, 0.22) transparent;
+  scrollbar-color: #232833 transparent;
 }
 
 ::-webkit-scrollbar {
@@ -64,48 +109,37 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(201, 169, 110, 0.2);
+  background: #232833;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 169, 110, 0.38);
+  background: #2E3542;
 }
 
-/* Utility to completely hide scrollbar while preserving natural scrolling */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none;             /* Chrome, Safari, Opera */
+  display: none;
 }
 
-/* ── SOLE INTERFACE DELIBERATE ANIMATION: THE HABIT CHECK BURST ── */
-@keyframes check-burst {
-  0% {
-    box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.6);
-  }
-  60% {
-    box-shadow: 0 0 0 8px rgba(201, 169, 110, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(201, 169, 110, 0);
-  }
+/* ── FOCUS RING ACCESSIBILITY ── */
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--primary);
 }
 
-.animate-check-burst {
-  animation: check-burst 0.45s ease-out forwards;
-}
-
+/* ── ANIMATIONS ── */
 @keyframes checkmark-spring {
   0% {
     transform: scale(0);
     opacity: 0;
   }
   65% {
-    transform: scale(1.28);
+    transform: scale(1.25);
     opacity: 1;
   }
   100% {
@@ -115,7 +149,7 @@ a {
 }
 
 .animate-checkmark-spring {
-  animation: checkmark-spring 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation: checkmark-spring 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Reduced Motion Override */
