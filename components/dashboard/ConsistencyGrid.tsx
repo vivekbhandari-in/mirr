@@ -207,32 +207,32 @@ export function ConsistencyGrid({
                     {week.days.map((day) => {
                       const isSelected = selectedDay?.dateStr === day.dateStr;
 
-                      // Color mapping according to Midnight Mirror token decisions:
+                      // Color mapping according to Mirr warm & vivid orange design system:
                       let cellClass = "";
                       if (day.isFuture) {
                         cellClass =
-                          "bg-surface-elevated/20 border border-dashed border-border/40 opacity-30 cursor-not-allowed";
+                          "bg-transparent border border-dashed border-border/40 opacity-30 cursor-not-allowed";
                       } else if (day.status === "completed") {
                         if (day.intensity === 4) {
                           cellClass =
-                            "bg-[#6366F1] border border-[#C7D2FE] shadow-[0_0_6px_rgba(99,102,241,0.4)]";
+                            "bg-[#EA580C] border border-[#FF6B00] shadow-[0_0_6px_rgba(255,107,0,0.35)]";
                         } else {
                           cellClass =
-                            "bg-[#4338CA] border border-[#7C8CFF]/60";
+                            "bg-[#FF6B00] border border-[#FB923C]";
                         }
                       } else if (day.status === "returned") {
                         cellClass =
-                          "bg-[#0284C7] border border-[#38BDF8]/60";
+                          "bg-[#EA580C] border border-[#FF6B00]";
                       } else if (day.status === "minimum") {
                         cellClass =
-                          "bg-[#0F766E] border border-[#2DD4BF]/50";
+                          "bg-[#0D9488] border border-[#14B8A6]";
                       } else if (day.status === "missed") {
                         cellClass =
-                          "bg-warning/15 border border-warning/50";
+                          "bg-stone-200 border border-stone-300";
                       } else {
                         // Rest / No commitment scheduled
                         cellClass =
-                          "bg-surface-elevated border border-border/50 hover:border-foreground-muted/60";
+                          "bg-surface-elevated border border-border/70 hover:border-foreground-muted/60";
                       }
 
                       // Additional rings for today & selected
@@ -439,23 +439,23 @@ export function ConsistencyGrid({
             />
             {/* Level 1: Minimum */}
             <span
-              className="w-2.5 h-2.5 rounded-[2px] bg-[#0F766E] border border-[#2DD4BF]/50"
-              title="Level 1: Minimum Proof Saved"
+              className="w-2.5 h-2.5 rounded-[2px] bg-[#0D9488] border border-[#14B8A6]"
+              title="Level 1: Minimum Version"
             />
             {/* Level 2: Returned */}
             <span
-              className="w-2.5 h-2.5 rounded-[2px] bg-[#0284C7] border border-[#38BDF8]/60"
-              title="Level 2: Returned After Drift"
+              className="w-2.5 h-2.5 rounded-[2px] bg-[#FB923C] border border-[#FDBA74]"
+              title="Level 2: Gentle Restart"
             />
             {/* Level 3: Full Proof */}
             <span
-              className="w-2.5 h-2.5 rounded-[2px] bg-[#4338CA] border border-[#7C8CFF]/60"
-              title="Level 3: Full Proof Completed"
+              className="w-2.5 h-2.5 rounded-[2px] bg-[#FF6B00] border border-[#FB923C]"
+              title="Level 3: Full Restart Completed"
             />
             {/* Level 4: Proof + Reflection */}
             <span
-              className="w-2.5 h-2.5 rounded-[2px] bg-[#6366F1] border border-[#C7D2FE]"
-              title="Level 4: Full Proof + Sealed Reflection"
+              className="w-2.5 h-2.5 rounded-[2px] bg-[#EA580C] border border-[#FF6B00]"
+              title="Level 4: Full Restart + Sealed Debrief"
             />
           </div>
           <span>More</span>
@@ -464,13 +464,13 @@ export function ConsistencyGrid({
 
           {/* Missed Indicator */}
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-[2px] bg-warning/15 border border-warning/50" />
+            <span className="w-2.5 h-2.5 rounded-[2px] bg-stone-200 border border-stone-300" />
             <span>Drift</span>
           </div>
 
           {/* Future Indicator */}
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-[2px] bg-surface-elevated/20 border border-dashed border-border/50 opacity-40" />
+            <span className="w-2.5 h-2.5 rounded-[2px] bg-transparent border border-dashed border-border/50 opacity-40" />
             <span>Future</span>
           </div>
         </div>
@@ -497,3 +497,4 @@ export function ConsistencyGrid({
     </div>
   );
 }
+

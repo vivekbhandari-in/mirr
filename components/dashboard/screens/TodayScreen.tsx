@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { PersonalMirror, TodayProofState } from "@/types/identity";
 import {
   Timer,
@@ -10,6 +11,7 @@ import {
   ArrowRight,
   Sparkles,
   Undo2,
+  ShieldCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ProgressRing } from "@/components/ui/ProgressRing";
@@ -46,36 +48,36 @@ export function TodayScreen({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.18 }}
-        className="space-y-1.5"
+        className="space-y-1"
       >
-        <span className="text-[11px] font-mono uppercase tracking-widest text-primary block">
+        <span className="text-[11px] font-mono uppercase tracking-widest text-primary font-semibold block">
           You are becoming
         </span>
-        <h1 className="text-xl sm:text-2xl font-editorial italic text-foreground tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
           {mirror.desiredIdentity}
         </h1>
       </motion.div>
 
-      {/* ── 2. HERO CARD: TODAY'S PROOF ── */}
+      {/* ── 2. HERO CARD: TODAY'S RESTART ── */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2 }}
         className={`rounded-card bg-surface border p-6 sm:p-8 space-y-6 shadow-card transition-all duration-200 ${
           isDone
-            ? "border-success/30"
+            ? "border-success/30 ring-1 ring-success/15"
             : isMissed
-            ? "border-warning/30"
-            : "border-border"
+            ? "border-warning/30 ring-1 ring-warning/15"
+            : "border-border hover:border-border-strong"
         }`}
       >
         {/* Card Header & Circular Progress Ring */}
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-              <span className="text-[11px] font-mono uppercase tracking-wider text-foreground-secondary">
-                Today&apos;s proof · {mirror.todayAction.duration} min
+              <span className="w-2 h-2 rounded-full bg-primary" />
+              <span className="text-[11px] font-mono uppercase tracking-wider text-foreground-secondary font-medium">
+                Today&apos;s restart · {mirror.todayAction.duration} min
               </span>
             </div>
 
@@ -88,50 +90,50 @@ export function TodayScreen({
             </p>
           </div>
 
-          {/* Progress Ring Primitive (4px stroke, 88px size) */}
+          {/* Progress Ring Primitive */}
           <ProgressRing
             progress={isDone ? 100 : 0}
             isCompleted={isDone}
             size={88}
             strokeWidth={4}
           >
-            {isCompleted && <Check size={24} className="text-success animate-checkmark-spring" />}
-            {isMinimum && <Minimize2 size={20} className="text-recovery animate-checkmark-spring" />}
-            {isMissed && <CircleAlert size={20} className="text-warning" />}
+            {isCompleted && <Check size={26} className="text-success animate-checkmark-spring" />}
+            {isMinimum && <Minimize2 size={22} className="text-recovery animate-checkmark-spring" />}
+            {isMissed && <CircleAlert size={22} className="text-warning" />}
             {isPending && (
-              <span className="font-mono text-xs font-medium text-primary">
-                0 / 1
+              <span className="font-mono text-xs font-semibold text-primary">
+                {mirror.todayAction.duration}m
               </span>
             )}
           </ProgressRing>
         </div>
 
-        {/* ── 3 CONTEXTUAL SUPPORT ROWS ── */}
+        {/* ── CONTEXTUAL SAFEGUARDS ── */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-          {/* Main Enemy */}
-          <div className="p-3.5 rounded-input bg-surface-muted border border-border space-y-1">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-warning block">
-              Main enemy today
+          {/* Main Blocker */}
+          <div className="p-3.5 rounded-xl bg-surface-elevated/60 border border-border space-y-1">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-warning font-semibold block">
+              Main Blocker
             </span>
-            <p className="text-xs font-medium text-foreground truncate">
+            <p className="text-xs font-medium text-foreground truncate capitalize">
               {mirror.mainBlocker}
             </p>
           </div>
 
-          {/* Anchor */}
-          <div className="p-3.5 rounded-input bg-surface-muted border border-border space-y-1">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-primary block">
-              Anchor
+          {/* Anchor Cue */}
+          <div className="p-3.5 rounded-xl bg-surface-elevated/60 border border-border space-y-1">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-primary font-semibold block">
+              Daily Anchor Cue
             </span>
             <p className="text-xs font-medium text-foreground truncate">
               {mirror.todayAction.anchor}
             </p>
           </div>
 
-          {/* Minimum Version */}
-          <div className="p-3.5 rounded-input bg-surface-muted border border-border space-y-1">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-recovery block">
-              Minimum version
+          {/* Minimum Version Fallback */}
+          <div className="p-3.5 rounded-xl bg-surface-elevated/60 border border-border space-y-1">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-teal-600 font-semibold block">
+              2-Min Fallback
             </span>
             <p
               className="text-xs font-medium text-foreground truncate"
@@ -150,10 +152,10 @@ export function TodayScreen({
                 <Button
                   variant="primary"
                   size="lg"
-                  icon={Timer}
+                  withCircularArrow
                   onClick={onStartFocus}
                 >
-                  Start focused session
+                  Start restart · {mirror.todayAction.duration} min
                 </Button>
 
                 <Button
@@ -162,16 +164,16 @@ export function TodayScreen({
                   icon={Minimize2}
                   onClick={onOpenMinimumVersion}
                 >
-                  Do minimum version
+                  Do 2-minute version
                 </Button>
               </div>
 
               <button
                 type="button"
                 onClick={onOpenMissedModal}
-                className="text-[12px] font-mono text-foreground-muted hover:text-warning transition-colors py-2 px-1"
+                className="text-xs text-foreground-muted hover:text-foreground transition-colors py-2 px-1"
               >
-                I drifted today
+                Can&apos;t do it today?
               </button>
             </div>
           )}
@@ -179,12 +181,12 @@ export function TodayScreen({
           {isCompleted && (
             <div className="flex items-center justify-between flex-wrap gap-4 py-1">
               <div className="space-y-1">
-                <div className="flex items-center gap-2 text-sm font-medium text-success">
+                <div className="flex items-center gap-2 text-sm font-semibold text-success">
                   <Check size={18} />
-                  <span>Proof logged — you acted like the person you want to become.</span>
+                  <span>You returned. That matters more than being perfect.</span>
                 </div>
-                <p className="text-[12px] text-foreground-muted font-mono">
-                  {proofState.durationActual || mirror.todayAction.duration} minutes of evidence sealed.
+                <p className="text-xs text-foreground-secondary">
+                  {proofState.durationActual || mirror.todayAction.duration} minutes of proof sealed. Come back tomorrow.
                 </p>
               </div>
 
@@ -194,7 +196,7 @@ export function TodayScreen({
                 iconRight={ArrowRight}
                 onClick={onGoToReflect}
               >
-                Reflect on session
+                Evening debrief
               </Button>
             </div>
           )}
@@ -202,12 +204,12 @@ export function TodayScreen({
           {isMinimum && (
             <div className="flex items-center justify-between flex-wrap gap-4 py-1">
               <div className="space-y-1">
-                <div className="flex items-center gap-2 text-sm font-medium text-recovery">
+                <div className="flex items-center gap-2 text-sm font-semibold text-teal-600">
                   <Minimize2 size={16} />
                   <span>Small proof still counts. Momentum preserved.</span>
                 </div>
-                <p className="text-[12px] text-foreground-muted font-mono">
-                  Completed via minimum version: {mirror.todayAction.minimumVersion}
+                <p className="text-xs text-foreground-secondary">
+                  2-minute restart complete: {mirror.todayAction.minimumVersion}
                 </p>
               </div>
 
@@ -217,7 +219,7 @@ export function TodayScreen({
                 iconRight={ArrowRight}
                 onClick={onGoToReflect}
               >
-                Evening reflection
+                Evening debrief
               </Button>
             </div>
           )}
@@ -225,12 +227,12 @@ export function TodayScreen({
           {isMissed && (
             <div className="flex items-center justify-between flex-wrap gap-4 py-1">
               <div className="space-y-1">
-                <div className="flex items-center gap-2 text-sm font-medium text-warning">
+                <div className="flex items-center gap-2 text-sm font-semibold text-warning">
                   <CircleAlert size={16} />
                   <span>You drifted today. That does not erase your progress.</span>
                 </div>
-                <p className="text-[12px] text-foreground-secondary">
-                  Friction: {proofState.missedReason || "Distraction"}. Tomorrow’s return action is ready.
+                <p className="text-xs text-foreground-secondary">
+                  Friction noted without shame. Tomorrow’s return action is ready.
                 </p>
               </div>
 
@@ -240,33 +242,33 @@ export function TodayScreen({
                 icon={Undo2}
                 onClick={onOpenMinimumVersion}
               >
-                Complete micro proof now
+                Do 2-min restart now
               </Button>
             </div>
           )}
         </div>
       </motion.div>
 
-      {/* ── 3. PROGRESSIVE DISCLOSURE: SUPPORTING CONTEXT ── */}
+      {/* ── 3. SUPPORTING BANNER: RECOVERY PHILOSOPHY ── */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, delay: 0.05 }}
-        className="rounded-card bg-surface-muted border border-border p-4 sm:p-5 flex items-center justify-between text-xs text-foreground-secondary"
+        className="rounded-card bg-surface border border-border p-4 sm:p-5 flex items-center justify-between text-xs text-foreground-secondary shadow-subtle"
       >
         <div className="flex items-center gap-3">
           <Sparkles size={16} className="text-primary flex-shrink-0" />
           <p className="leading-relaxed">
             {isDone
               ? "Your proof is complete for today. Let the evidence settle."
-              : "Mirr deliberately protects one block. You do not need to do ten things today; do this one."}
+              : "Mirr deliberately protects one action. You do not need to do ten things today; do this one."}
           </p>
         </div>
 
         <button
           type="button"
           onClick={onGoToReflect}
-          className="text-foreground hover:text-primary font-mono text-[11px] flex items-center gap-1 flex-shrink-0 ml-4 transition-colors"
+          className="text-foreground hover:text-primary font-mono text-[11px] flex items-center gap-1 flex-shrink-0 ml-4 transition-colors font-medium"
         >
           <span>Reflect</span>
           <ArrowRight size={12} />

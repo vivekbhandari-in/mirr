@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, forwardRef } from "react";
-import { LucideIcon } from "lucide-react";
+import { LucideIcon, ArrowRight } from "lucide-react";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "recovery";
+export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger" | "recovery";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -9,6 +9,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   icon?: LucideIcon;
   iconRight?: LucideIcon;
+  withCircularArrow?: boolean;
   children?: React.ReactNode;
 }
 
@@ -19,6 +20,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = "md",
       icon: Icon,
       iconRight: IconRight,
+      withCircularArrow = false,
       className = "",
       disabled,
       children,
@@ -27,29 +29,31 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    // Base styles: 8px radius, accessible focus, font weights, no text wrap
+    // Base styles: pill shape by default, accessible focus, font weights, no text wrap
     const baseStyles =
-      "inline-flex flex-row items-center justify-center gap-2 rounded-btn select-none transition-colors duration-150 outline-none disabled:opacity-40 disabled:pointer-events-none cursor-pointer whitespace-nowrap";
+      "inline-flex flex-row items-center justify-center gap-2 rounded-full select-none transition-all duration-150 outline-none disabled:opacity-40 disabled:pointer-events-none cursor-pointer whitespace-nowrap active:scale-[0.98]";
 
     // Variants
     const variantStyles: Record<ButtonVariant, string> = {
       primary:
-        "bg-primary hover:bg-primary-hover text-foreground-inverse font-semibold shadow-sm active:scale-[0.99]",
+        "bg-primary hover:bg-primary-hover text-white font-medium shadow-sm hover:shadow",
       secondary:
-        "bg-transparent hover:bg-surface-elevated text-foreground border border-border font-normal active:scale-[0.99]",
+        "bg-surface hover:bg-surface-elevated text-foreground border border-border font-medium shadow-subtle",
+      outline:
+        "bg-transparent hover:bg-surface-elevated text-foreground border border-border-strong font-medium",
       ghost:
         "bg-transparent hover:bg-surface-elevated text-foreground-secondary hover:text-foreground font-normal",
       danger:
-        "bg-danger/15 hover:bg-danger/25 text-danger border border-danger/30 font-medium active:scale-[0.99]",
+        "bg-danger/10 hover:bg-danger/20 text-danger border border-danger/25 font-medium",
       recovery:
-        "bg-recovery hover:bg-recovery/90 text-foreground-inverse font-semibold shadow-sm active:scale-[0.99]",
+        "bg-recovery hover:bg-recovery/90 text-white font-medium shadow-sm",
     };
 
     // Sizes
     const sizeStyles: Record<ButtonSize, string> = {
-      sm: "h-8 px-3 text-xs",
-      md: "h-10 px-4 text-[13px]",
-      lg: "h-12 px-6 text-sm",
+      sm: "h-8 px-3.5 text-xs gap-1.5",
+      md: "h-10 px-5 text-[13px] sm:text-sm gap-2",
+      lg: "h-12 px-6 text-sm sm:text-base gap-2.5",
     };
 
     return (
@@ -60,9 +64,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
         {...props}
       >
-        {Icon && <Icon size={18} className="flex-shrink-0" />}
+        {Icon && <Icon size={size === "sm" ? 14 : 18} className="flex-shrink-0" />}
         {children}
-        {IconRight && <IconRight size={18} className="flex-shrink-0" />}
+        {IconRight && <IconRight size={size === "sm" ? 14 : 18} className="flex-shrink-0" />}
+        {withCircularArrow && (
+          <span className="w-5 h-5 rounded-full bg-zinc-900 text-white flex items-center justify-center shrink-0 ml-0.5">
+            <ArrowRight size={11} className="stroke-[2.5]" />
+          </span>
+        )}
       </button>
     );
   }

@@ -3,27 +3,27 @@
 @tailwind utilities;
 
 :root {
-  /* ── MIDNIGHT MIRROR DESIGN SYSTEM TOKENS ── */
-  --background: #0A0C10;
-  --surface: #11141A;
-  --surface-elevated: #161A22;
-  --surface-muted: #1B202A;
-  --border: #232833;
-  --border-strong: #2E3542;
+  /* ── MIRR WARM OFF-WHITE & VIVID ORANGE DESIGN SYSTEM ── */
+  --background: #FAF8F5;
+  --surface: #FFFFFF;
+  --surface-elevated: #F4F1EB;
+  --surface-muted: #EFECE6;
+  --border: #E8E5DF;
+  --border-strong: #D5D0C6;
 
-  --foreground: #E7E9EE;
-  --foreground-secondary: #98A2B3;
-  --foreground-muted: #6B7280;
-  --foreground-inverse: #0A0C10;
+  --foreground: #18181B;
+  --foreground-secondary: #52525B;
+  --foreground-muted: #71717A;
+  --foreground-inverse: #FFFFFF;
 
-  --primary: #7C8CFF;
-  --primary-hover: #8F9DFF;
-  --primary-soft: rgba(124, 140, 255, 0.12);
+  --primary: #FF6B00;
+  --primary-hover: #EA580C;
+  --primary-soft: rgba(255, 107, 0, 0.08);
 
-  --success: #4ADE80;
-  --recovery: #2DD4BF;
-  --warning: #F59E0B;
-  --danger: #F87171;
+  --success: #16A34A;
+  --recovery: #0D9488;
+  --warning: #D97706;
+  --danger: #DC2626;
 
   /* Spacing Scale (4px base, 8px rhythm) */
   --space-1: 4px;
@@ -38,33 +38,33 @@
   --space-16: 64px;
 
   /* Radii */
-  --radius-btn: 8px;
-  --radius-input: 8px;
-  --radius-card-sm: 10px;
-  --radius-card: 12px;
-  --radius-modal: 16px;
-  --radius-pill: 999px;
+  --radius-btn: 9999px;
+  --radius-input: 10px;
+  --radius-card-sm: 12px;
+  --radius-card: 16px;
+  --radius-modal: 20px;
+  --radius-pill: 9999px;
 
   /* Legacy & compatibility aliases */
-  --bg: #0A0C10;
-  --bg1: #11141A;
-  --bg2: #161A22;
-  --bg3: #1B202A;
-  --text: #E7E9EE;
-  --sub: #98A2B3;
-  --faint: #6B7280;
-  --line: #232833;
-  --charcoal: #0A0C10;
-  --accent-indigo: #7C8CFF;
-  --gold: #7C8CFF;
-  --gold2: #8F9DFF;
-  --ink: #0A0C10;
-  --ink2: #11141A;
-  --ink3: #161A22;
-  --paper: #E7E9EE;
-  --muted: #98A2B3;
-  --rule: #232833;
-  --rule2: #2E3542;
+  --bg: #FAF8F5;
+  --bg1: #FFFFFF;
+  --bg2: #F4F1EB;
+  --bg3: #EFECE6;
+  --text: #18181B;
+  --sub: #52525B;
+  --faint: #71717A;
+  --line: #E8E5DF;
+  --charcoal: #FAF8F5;
+  --accent-indigo: #FF6B00;
+  --gold: #FF6B00;
+  --gold2: #EA580C;
+  --ink: #FAF8F5;
+  --ink2: #FFFFFF;
+  --ink3: #F4F1EB;
+  --paper: #18181B;
+  --muted: #52525B;
+  --rule: #E8E5DF;
+  --rule2: #D5D0C6;
   --serif: var(--font-newsreader, var(--font-dm-serif, Georgia, serif));
   --sans: var(--font-sans, var(--font-inter, system-ui, sans-serif));
 }
@@ -93,10 +93,10 @@ a {
   text-decoration: none;
 }
 
-/* ── HAIRLINE MIDNIGHT SCROLLBAR ── */
+/* ── WARM SUBTLE SCROLLBAR ── */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #232833 transparent;
+  scrollbar-color: #D5D0C6 transparent;
 }
 
 ::-webkit-scrollbar {
@@ -109,12 +109,12 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #232833;
+  background: #D5D0C6;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2E3542;
+  background: #A8A29E;
 }
 
 .no-scrollbar {

@@ -11,13 +11,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full space-y-1.5 text-left">
         {label && (
-          <label className="block text-[13px] font-normal text-foreground-secondary">
+          <label className="block text-[13px] font-medium text-foreground-secondary">
             {label}
           </label>
         )}
         <input
           ref={ref}
-          className={`w-full h-10 px-3 bg-surface-muted text-foreground border border-border rounded-input text-[14px] placeholder:text-foreground-muted outline-none transition-all duration-150 focus:border-primary focus:ring-4 focus:ring-primary-soft disabled:opacity-50 disabled:cursor-not-allowed ${
+          className={`w-full h-11 px-3.5 bg-surface text-foreground border border-border rounded-input text-[14px] placeholder:text-foreground-muted outline-none transition-all duration-150 focus:border-primary focus:ring-4 focus:ring-primary-soft shadow-subtle disabled:opacity-50 disabled:cursor-not-allowed ${
             error ? "border-danger focus:border-danger focus:ring-danger/20" : ""
           } ${className}`}
           {...props}
@@ -44,14 +44,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="w-full space-y-1.5 text-left">
         {label && (
-          <label className="block text-[13px] font-normal text-foreground-secondary">
+          <label className="block text-[13px] font-medium text-foreground-secondary">
             {label}
           </label>
         )}
         <textarea
           ref={ref}
           rows={rows}
-          className={`w-full p-3 bg-surface-muted text-foreground border border-border rounded-input text-[14px] placeholder:text-foreground-muted outline-none transition-all duration-150 focus:border-primary focus:ring-4 focus:ring-primary-soft disabled:opacity-50 disabled:cursor-not-allowed resize-none leading-relaxed ${
+          className={`w-full p-3.5 bg-surface text-foreground border border-border rounded-input text-[14px] placeholder:text-foreground-muted outline-none transition-all duration-150 focus:border-primary focus:ring-4 focus:ring-primary-soft shadow-subtle disabled:opacity-50 disabled:cursor-not-allowed resize-none leading-relaxed ${
             error ? "border-danger focus:border-danger focus:ring-danger/20" : ""
           } ${className}`}
           {...props}
@@ -66,4 +66,3 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 );
 
 Textarea.displayName = "Textarea";
-

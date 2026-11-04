@@ -48,9 +48,9 @@ const REMINDER_TIMES = [
 ];
 
 const THEME_OPTIONS = [
-  { value: "dark", label: "Dark (Midnight Mirror)" },
-  { value: "obsidian", label: "Deep Obsidian" },
-  { value: "system", label: "System Dark" },
+  { value: "warm", label: "Warm Editorial (Mirr Default)" },
+  { value: "light", label: "Pure Minimal Light" },
+  { value: "system", label: "System Default" },
 ];
 
 export function ProfileView() {

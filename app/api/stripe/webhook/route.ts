@@ -14,6 +14,10 @@ export async function POST(request: Request) {
     if (webhookSecret && signature) {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
     } else {
+      if (process.env.NODE_ENV === "production") {
+        console.error("Strict webhook signature verification failed: Missing secret or signature");
+        return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+      }
       event = JSON.parse(body);
     }
   } catch (err: any) {

@@ -36,7 +36,7 @@ export function ProgressRing({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          className="stroke-[#232833]"
+          className="stroke-border"
           strokeWidth={strokeWidth}
           fill="transparent"
         />
@@ -64,4 +64,3 @@ export function ProgressRing({
     </div>
   );
 }
-

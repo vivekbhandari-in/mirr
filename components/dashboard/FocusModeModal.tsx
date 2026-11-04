@@ -2,17 +2,25 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Check, X, Timer } from "lucide-react";
+import { Play, Pause, Check, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 interface FocusModeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onComplete: (durationMinutes: number) => void;
+  onComplete: (durationMinutes: number, missedReason?: string) => void;
   actionTitle: string;
   actionDuration: number; // minutes
   desiredIdentity: string;
 }
+
+const FRICTION_REASONS = [
+  { id: "low_energy", label: "Low energy" },
+  { id: "overwhelm", label: "Overwhelm" },
+  { id: "distraction", label: "Distraction" },
+  { id: "forgot", label: "Forgot" },
+  { id: "something_else", label: "Something else" },
+];
 
 export function FocusModeModal({
   isOpen,
@@ -26,6 +34,7 @@ export function FocusModeModal({
   const [secondsRemaining, setSecondsRemaining] = useState(totalSeconds);
   const [isRunning, setIsRunning] = useState(true);
   const [isFinished, setIsFinished] = useState(false);
+  const [selectedFriction, setSelectedFriction] = useState<string | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Reset timer on open
@@ -34,6 +43,7 @@ export function FocusModeModal({
       setSecondsRemaining(actionDuration * 60);
       setIsRunning(true);
       setIsFinished(false);
+      setSelectedFriction(null);
     }
   }, [isOpen, actionDuration]);
 
@@ -60,11 +70,7 @@ export function FocusModeModal({
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isOpen, runningOrRemaining(isRunning, secondsRemaining)]);
-
-  function runningOrRemaining(r: boolean, s: number) {
-    return `${r}-${s > 0}`;
-  }
+  }, [isOpen, isRunning, secondsRemaining]);
 
   if (!isOpen) return null;
 
@@ -82,7 +88,7 @@ export function FocusModeModal({
   };
 
   const handleClaimEvidence = () => {
-    onComplete(elapsedMinutes);
+    onComplete(elapsedMinutes, selectedFriction || undefined);
     onClose();
   };
 
@@ -92,7 +98,7 @@ export function FocusModeModal({
       aria-modal="true"
       className="fixed inset-0 z-50 bg-background text-foreground flex flex-col justify-between p-6 sm:p-12 overflow-hidden select-none"
     >
-      {/* Top Bar: Close & Mode indicator */}
+      {/* Top Bar */}
       <header className="relative z-10 w-full max-w-[800px] mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 text-xs text-foreground-secondary font-mono tracking-wider uppercase">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -102,7 +108,7 @@ export function FocusModeModal({
         <button
           type="button"
           onClick={onClose}
-          className="p-2 text-foreground-secondary hover:text-foreground hover:bg-surface-elevated rounded-btn transition-colors"
+          className="p-2 text-foreground-secondary hover:text-foreground hover:bg-surface-elevated rounded-full transition-colors"
           title="Exit focus mode"
           aria-label="Exit focus mode"
         >
@@ -124,8 +130,8 @@ export function FocusModeModal({
             >
               {/* Action Headline */}
               <div className="space-y-2">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-primary">
-                  Today&apos;s Proof
+                <span className="text-[11px] font-mono uppercase tracking-widest text-primary font-semibold">
+                  Today&apos;s Restart
                 </span>
                 <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground max-w-[540px]">
                   {actionTitle}
@@ -139,17 +145,17 @@ export function FocusModeModal({
                 </div>
 
                 {/* Progress bar line */}
-                <div className="w-64 sm:w-80 h-1 bg-border rounded-pill mx-auto mt-4 overflow-hidden">
+                <div className="w-64 sm:w-80 h-1.5 bg-border rounded-full mx-auto mt-4 overflow-hidden">
                   <div
-                    className="h-full bg-primary transition-all duration-1000 ease-linear rounded-pill"
+                    className="h-full bg-primary transition-all duration-1000 ease-linear rounded-full"
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
               </div>
 
-              {/* Why This Matters Line */}
+              {/* Why This Matters */}
               <p className="text-xs sm:text-sm font-normal text-foreground-secondary max-w-[440px] leading-relaxed italic">
-                “Every minute of focus creates undeniable proof that you are becoming {desiredIdentity.toLowerCase()}.”
+                “You want to become {desiredIdentity.toLowerCase().replace(/^you are becoming\s*/i, "")}.”
               </p>
 
               {/* Controls */}
@@ -167,10 +173,11 @@ export function FocusModeModal({
                 <Button
                   variant="primary"
                   size="md"
+                  withCircularArrow
                   onClick={handleFinishEarly}
                   className="px-5 min-w-[150px]"
                 >
-                  End &amp; log proof
+                  Finish early
                 </Button>
               </div>
             </motion.div>
@@ -180,30 +187,58 @@ export function FocusModeModal({
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="p-8 sm:p-10 rounded-modal bg-surface border border-border space-y-6 max-w-[460px] mx-auto shadow-modal"
+              className="p-8 sm:p-10 rounded-modal bg-surface border border-border space-y-6 max-w-[500px] mx-auto shadow-modal"
             >
-              <div className="w-12 h-12 rounded-card-sm bg-success/10 text-success border border-success/20 flex items-center justify-center mx-auto">
+              <div className="w-12 h-12 rounded-full bg-success/10 text-success flex items-center justify-center mx-auto">
                 <Check size={24} />
               </div>
 
               <div className="space-y-2">
                 <h2 className="text-xl font-semibold text-foreground">
-                  {elapsedMinutes} minutes of evidence created.
+                  You returned. That matters more than being perfect.
                 </h2>
-                <p className="text-xs text-foreground-secondary leading-relaxed">
-                  You did not drift. You showed up and protected your focused block.
-                  This proof has been permanently sealed into your archive.
+                <p className="text-sm text-foreground-secondary leading-relaxed">
+                  {elapsedMinutes} minutes of proof sealed today.
                 </p>
               </div>
 
-              <Button
-                variant="primary"
-                size="lg"
-                className="w-full"
-                onClick={handleClaimEvidence}
-              >
-                Return to Sanctuary
-              </Button>
+              {/* Friction Debrief */}
+              <div className="space-y-2.5 pt-1 text-left">
+                <label className="text-xs font-medium text-foreground-secondary block text-center">
+                  What made it hard to come back? (optional)
+                </label>
+                <div className="flex flex-wrap items-center justify-center gap-1.5">
+                  {FRICTION_REASONS.map((reason) => {
+                    const isSelected = selectedFriction === reason.id;
+                    return (
+                      <button
+                        key={reason.id}
+                        type="button"
+                        onClick={() => setSelectedFriction(isSelected ? null : reason.id)}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                          isSelected
+                            ? "bg-primary text-white border-primary"
+                            : "bg-surface-elevated text-foreground-secondary border-border hover:border-border-strong hover:text-foreground"
+                        }`}
+                      >
+                        {reason.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  withCircularArrow
+                  className="w-full"
+                  onClick={handleClaimEvidence}
+                >
+                  Log proof &amp; return
+                </Button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -212,7 +247,7 @@ export function FocusModeModal({
       {/* Bottom Hint */}
       <footer className="relative z-10 w-full max-w-[800px] mx-auto text-center">
         <p className="text-[11px] font-mono text-foreground-muted">
-          Phone away · Fullscreen focus · Press Esc anytime
+          Quiet focus · Fullscreen · Press Esc anytime
         </p>
       </footer>
     </div>

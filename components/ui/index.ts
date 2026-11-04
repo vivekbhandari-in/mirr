@@ -1,6 +1,7 @@
 export * from "./Button";
 export * from "./Card";
 export * from "./Input";
+export * from "./Select";
 export * from "./Modal";
 export * from "./Badge";
 export * from "./ProgressRing";
@@ -8,4 +9,7 @@ export * from "./SidebarItem";
 export * from "./EmptyState";
 export * from "./SectionHeading";
 export * from "./Logo";
-
+export * from "./Tabs";
+export * from "./Timer";
+export * from "./PricingCard";
+export * from "./FAQAccordion";
