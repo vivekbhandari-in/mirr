@@ -1,29 +1,23 @@
 "use client";
 
-import { ProofEvent } from "@/types/identity";
-import { History, Check, Minimize2, Undo2, CircleAlert, Sparkles } from "lucide-react";
-import { Card, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { ProofEvent, ReflectionEntry, TodayProofState } from "@/types/identity";
+import { History, Sparkles } from "lucide-react";
+import { Card } from "@/components/ui/Card";
+import { ConsistencyGrid } from "../ConsistencyGrid";
 
 interface EvidenceScreenProps {
   events: ProofEvent[];
+  reflections?: Record<string, ReflectionEntry>;
+  todayProofState?: TodayProofState;
   daysActedMonth: number;
   returnRate: string;
   trendText: string;
 }
 
-const WEEK_DAYS = [
-  { day: "Mon", status: "completed", label: "Full Proof" },
-  { day: "Tue", status: "completed", label: "Full Proof" },
-  { day: "Wed", status: "minimum", label: "Minimum Version" },
-  { day: "Thu", status: "missed", label: "Missed" },
-  { day: "Fri", status: "returned", label: "Returned After Drift" },
-  { day: "Sat", status: "completed", label: "Full Proof" },
-  { day: "Sun", status: "today", label: "Today" },
-];
-
 export function EvidenceScreen({
   events,
+  reflections = {},
+  todayProofState,
   daysActedMonth,
   returnRate,
   trendText,
@@ -91,57 +85,13 @@ export function EvidenceScreen({
         </div>
       </section>
 
-      {/* ── 2. IDENTITY CONSISTENCY WEEKLY GRID ── */}
+      {/* ── 2. YEARLY CONSISTENCY LANDSCAPE ── */}
       <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xs font-mono uppercase tracking-wider text-foreground-secondary">
-            2. Weekly Consistency Rhythm
-          </h2>
-
-          <div className="flex items-center gap-3 text-[10px] font-mono text-foreground-secondary">
-            <Badge variant="success" dot>Completed</Badge>
-            <Badge variant="recovery" dot>Minimum</Badge>
-            <Badge variant="warning" dot>Missed</Badge>
-          </div>
-        </div>
-
-        <Card padding="md">
-          <div className="grid grid-cols-7 gap-2 sm:gap-3 text-center">
-            {WEEK_DAYS.map((item, idx) => (
-              <div key={idx} className="space-y-2">
-                <span className="text-[11px] font-mono text-foreground-secondary">
-                  {item.day}
-                </span>
-
-                <div
-                  className={`h-12 rounded-btn flex items-center justify-center transition-colors border ${
-                    item.status === "completed"
-                      ? "bg-success/10 border-success/30 text-success"
-                      : item.status === "minimum"
-                      ? "bg-recovery/10 border-recovery/30 text-recovery"
-                      : item.status === "returned"
-                      ? "bg-recovery/20 border-recovery text-recovery"
-                      : item.status === "missed"
-                      ? "bg-warning/10 border-warning/30 text-warning"
-                      : "bg-surface-muted border-border text-foreground-muted"
-                  }`}
-                  title={`${item.day}: ${item.label}`}
-                >
-                  {item.status === "completed" && <Check size={16} />}
-                  {item.status === "minimum" && <Minimize2 size={14} />}
-                  {item.status === "returned" && <Undo2 size={14} />}
-                  {item.status === "missed" && <CircleAlert size={14} />}
-                  {item.status === "today" && (
-                    <span className="text-[10px] font-mono">
-                      <span className="hidden sm:inline">Today</span>
-                      <span className="sm:hidden text-primary font-bold">●</span>
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
+        <ConsistencyGrid
+          proofEvents={events}
+          reflections={reflections}
+          todayProofState={todayProofState}
+        />
       </section>
 
       {/* ── 3. PROOF TIMELINE ── */}

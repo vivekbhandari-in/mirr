@@ -647,6 +647,8 @@ export function DashboardView() {
                 {activeTab === "evidence" && (
                   <EvidenceScreen
                     events={proofEvents}
+                    reflections={reflections}
+                    todayProofState={proofState}
                     daysActedMonth={Math.max(1, proofEvents.length)}
                     returnRate="100%"
                     trendText="Steadily building"
